@@ -1,44 +1,38 @@
-% lucid.Rnw
-% Time-stamp: c:/x/lucid.Rnw
+% lucid_printing.Rnw
+% Time-stamp: <15 Dec 2014 17:59:43 c:/x/rpack/lucid/vignettes/lucid_printing.Rnw>
 
 % \VignetteEngine{knitr::knitr}
-% \VignettePackage{lucid}
 % \VignetteIndexEntry{Lucid printing}
 
 \documentclass[12pt]{article}
 % Note, 11 pt fails with a missing font unless we have \usepackage{ae}
 
 \usepackage{color}
-\definecolor{darkblue}{rgb}{0,0,0.5}
-\definecolor{darkred}{rgb}{0.6,0.0,0.0}
+\definecolor{navy}{rgb}{0,0,0.5}
+\definecolor{maroon}{rgb}{0.6,0.0,0.0}
 \definecolor{lightgray}{rgb}{0.7,0.7,0.7}
 
-% Hyperref
-\usepackage[colorlinks,pagebackref,plainpages=false,
-  citecolor=darkblue,linkcolor=darkblue,urlcolor=darkblue,plainpages]{hyperref}
+\usepackage[colorlinks,citecolor=navy,linkcolor=navy,urlcolor=navy]{hyperref}
 
-\usepackage{url}     % Don't break long URLs
+%\usepackage{url}     % Don't break long URLs
 \raggedright         % Don't right-justify
 \usepackage{parskip} % Extra vertical space between paragraphs
+
 \usepackage{enumitem}
 \setlist{nolistsep}  % Reduce spacing between list items
 
 \usepackage[left=.5in,top=.5in,right=.5in,bottom=1in]{geometry}
 
-% \code mini environment ttfamily->texttt
-\newcommand{\code}[1]{\texttt{\textcolor{darkred}{#1}}}
-
-% Define myTitle to be the title of the document
-\let\oldTitle\title
-\renewcommand{\title}[1]{\newcommand{\myTitle}{#1}\oldTitle{\sf #1}}
+\newcommand{\code}[1]{\texttt{\textcolor{maroon}{#1}}}
 
 % Header & footer
+\usepackage{titling} % copy \title{} into \thetitle
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\headrule}{}  % no line between header and body
 \renewcommand{\footrule}{}  % no line between body and footer
 \fancyhf{} % clear header and footer fields
-\fancyfoot[L]{\small \color{lightgray} \myTitle} % \FileName
+\fancyfoot[L]{\small \color{lightgray} \thetitle}
 \fancyfoot[R]{\small \thepage}
 
 \usepackage[round]{natbib}
@@ -62,17 +56,15 @@
 % Setup stuff.
 <<SETUP, echo=FALSE, results="hide">>=
 library("knitr")
-opts_chunk$set(fig.path="figs/lucid-", fig.align="center",
-               fig.width=7, fig.height=7)
+opts_chunk$set(fig.align="center", fig.width=7, fig.height=7)
 options(width=90)
-if(!file.exists("figs")) dir.create("figs")
 @
 % ----------------------------------------------------------------------------
 
 \section{Abstract}
 
 The \code{lucid} package provides a method for pretty-printing vectors
-of floating point numbers, with special application to 
+of floating point numbers, with special application to
 printing of variance components from mixed models.
 
 
@@ -105,11 +97,11 @@ points on a vertical line, requires extra effort by a programmer but should be
 almost mandatory for any software that is to be used often.
 \end{quote}
 
-One recommendation for improving the display of tables of numbers 
+One recommendation for improving the display of tables of numbers
 is to round numbers a lot \citep{wainer1997improving}.  Humans cannot
-understand more than two digits very easily.  It is rare that more 
+understand more than two digits very easily.  It is rare that more
 than two digits of accuracy can be justified, and even if we could justify
-more than two digits, we seldom care about more than two digits.  
+more than two digits, we seldom care about more than two digits.
 In R, using the \code{round} and \code{signif} functions can help improve
 numerical output, but can still print results in scientific notation
 and leave much to be desired.
@@ -124,7 +116,7 @@ df1 <- data.frame(effect=c(-13.5, 4.5,  24.5, 6.927792e-14, -1.75,
 rownames(df1) <- c("A","B","C","C1","C2","D","(Intercept)")
 print(df1)
 @
-Which coeficient is basically zero?  How large is the intercept?  
+Which coeficient is basically zero?  How large is the intercept?
 
 Both questions can be answered using the output shown above, but it
 takes too much effort to answer the questions.  Now examine the same
@@ -134,13 +126,13 @@ require("lucid")
 options(digits=7) # knitr defaults to 4, R console uses 7
 lucid(df1)
 @
-Which coeficient is basically zero?  How large is the intercept?  
+Which coeficient is basically zero?  How large is the intercept?
 
-Printing the numbers with the \code{lucid} function has made the 
+Printing the numbers with the \code{lucid} function has made the
 questions much easier to answer.
 
 
-The sequence of steps used by \code{lucid} to format and 
+The sequence of steps used by \code{lucid} to format and
 print the output is.
 \begin{enumerate}
 \item{Zap to zero}
@@ -150,8 +142,8 @@ print the output is.
 \end{enumerate}
 
 The \code{lucid} package contains a generic function \code{lucid} with
-specific methods for numeric vectors, matrices, lists and data frames.  
-The methods for matrices and data frames apply formatting to each 
+specific methods for numeric vectors, matrices, lists and data frames.
+The methods for matrices and data frames apply formatting to each
 numeric column and leave other columns unchanged.
 
 
@@ -162,7 +154,7 @@ numeric column and leave other columns unchanged.
 %                   component=c(10.9,277,493,1.30E-04,126,22.3,481,268),
 %                   std.error=c(4.40,166,26.1,1.58E-06,119,4.50,108,3.25),
 %                   z.ratio=c(2.471,1.669,18.899,82.242,1.060,4.951,4.442,82.242),
-%                   constraint=c('Pos','Pos','Pos','Bound','Pos','Pos','Pos','Pos'))
+%                   constraint=c('pos','pos','pos','bnd','pos','pos','pos','pos'))
 % print(df2)
 % @
 % <<echo=TRUE>>=
@@ -187,36 +179,36 @@ numeric column and leave other columns unchanged.
 \section{Example: Antibiotic effectiveness}
 
 \cite{wainer2009pictures} present data published by Will Burtin in 1951
-on the effectiveness of antibiotics against 16 types of bacteria.  
+on the effectiveness of antibiotics against 16 types of bacteria.
 The data is included in the \code{lucid} package as a dataframe
 called \code{antibiotic}.  The default view of this data is:
 <<>>=
 print(antibiotic)
-@ 
+@
 Due to the wide range in magnitude of the values, nearly half of the
 floating-point numbers in the default view contain trailing zeros
 after the decimal, which adds significant clutter and impedes
-interpretation.  The \code{lucid} display of the data is:  
+interpretation.  The \code{lucid} display of the data is:
 <<>>=
 lucid(antibiotic)
 @
-The \code{lucid} display is dramatically simplified, providing a 
+The \code{lucid} display is dramatically simplified, providing a
 much clearer picture of the effectiveness of the antibiotics against
-bacteria.  This view of the data matches exactly the appearance of 
+bacteria.  This view of the data matches exactly the appearance of
 Table 1 in \cite{wainer2009pictures}.
 
-A stem-and-leaf plot is a semi-graphical display of data, in that the 
+A stem-and-leaf plot is a semi-graphical display of data, in that the
 {\it positions} of the numbers create a display similar to a histogram.
-In a similar manner, the \code{lucid} output is a semi-graphical view 
-of the data.  
-The figure below shows a dotplot of the penicillin values on a 
+In a similar manner, the \code{lucid} output is a semi-graphical view
+of the data.
+The figure below shows a dotplot of the penicillin values on a
 reverse log10 scale.
 Note the similarity in the overall shape of the positions
-of the left-most significant digit in the penicillin column of the 
+of the left-most significant digit in the penicillin column of the
 output and the dotplot.
 Also, as noted by \cite{gelman2011tables}, the amount of ink in printing
 the significant digit has a surprisingly large correlation with the value
-of the digit, increasing the information in the semi-graphical view 
+of the digit, increasing the information in the semi-graphical view
 from \code{lucid} printing.
 <<echo=FALSE, message=FALSE, fig.height=4, fig.width=4>>=
 require(lattice)
@@ -233,27 +225,34 @@ dotplot(bacteria~ -log10(penicillin), anti,
 
 \section{Application to mixed models}
 
-During the process of iterative fitting of mixed models, it is often useful 
-to compare fits of different models to data, for example using 
-loglikelihood or AIC values, or with the help of resiudal plots.  
+During the process of iterative fitting of mixed models, it is often useful
+to compare fits of different models to data, for example using
+loglikelihood or AIC values, or with the help of resiudal plots.
 It can also be very informative to
 inspect the variance components.  The \code{lucid} package provides a function
-called \code{vc} that makes it easy to extract the estimated variances and 
-correlations from fitted models and prints them in friendly format 
-using the \code{lucid} function.  
+called \code{vc} that makes it easy to extract the estimated variances and
+correlations from fitted models and prints them in friendly format
+using the \code{lucid} function.
 
 The \code{vc} function has methods that can be used with the
-\code{nlme} \citep{pinheiro2014nlme}, 
-\code{lme4} \citep{bates2014lme4}, and 
+\code{nlme} \citep{pinheiro2014nlme},
+\code{lme4} \citep{bates2014lme4}, and
 \code{asreml} \citep{butler2009asreml}
-packages.  
+packages.
 The \code{VarCorr} function can be used to similar effect with the
 \code{nlme} and \code{lme4} packages, but it shows variances for \code{nlme}
 models and standard deviations for \code{lme4} models.
 The \code{VarCorr} function is not available for the
 \code{asreml} package.  The \code{vc} function provides a unified interface
 for extracting the variance components from fitted models and prints
-the results using \code{lucid}.  
+the results using \code{lucid}.
+
+\cite{pearce1988manual} suggest showing four significant digits for the error
+mean square and two decimal places digits for $F$ values.  The \code{lucid}
+function uses a similar philosophy, presenting the
+variances with four significant digits and \code{asreml} $Z$ statistics with
+two significant digits.
+
 The following simple example illustrates use of the \code{vc} function.
 
 <<message=FALSE>>=
@@ -274,36 +273,36 @@ vc(m4)
 ##     R!variance     16.17       6.6     2.4    pos
 @
 
-A second example is more complex.  The example 
+A second example is more complex.  The example
 is no longer reproducible due to changes in the mixed-models
 software, so only the output is shown.  A single model was fit to
-data using two different optimization methods.  The goal was to 
-compare the results from the two optimizers.  In the output below, 
+data using two different optimization methods.  The goal was to
+compare the results from the two optimizers.  In the output below,
 the first two columns identify terms in the model, the next two
 columns are the variance and standard deviation from one optimizer,
 while the final two columns are from the other optimizer.
 <<echo=FALSE>>=
-d1 <- structure(list(Groups = c("new.gen", "one", "one.1", "one.2", 
-"one.3", "one.4", "one.5", "one.6", "one.7", "one.8", "one.9", 
-"one.10", "one.11", "one.12", "one.13", "Residual"), Name = c("(Intercept)", 
-"r1:c3", "r1:c2", "r1:c1", "c8", "c6", "c4", "c3", "c2", "c1", 
-"r10", "r8", "r4", "r2", "r1", ""), Variance = c(2869.45, 5531.6, 
-58225.75, 128003.6, 6455.77, 1399.73, 1791.65, 2548.89, 5941.8, 
-0, 1132.95, 1355.23, 2268.73, 241.79, 9199.94, 4412.11), Std.Dev. = c(53.567, 
-74.375, 241.3, 357.776, 80.348, 37.413, 42.328, 50.486, 77.083, 
-0, 33.659, 36.813, 47.631, 15.55, 95.916, 66.424)), .Names = c("Groups", 
-"Name", "Variance", "Std.Dev."), class = "data.frame", row.names = c(NA, 
+d1 <- structure(list(Groups = c("new.gen", "one", "one.1", "one.2",
+"one.3", "one.4", "one.5", "one.6", "one.7", "one.8", "one.9",
+"one.10", "one.11", "one.12", "one.13", "Residual"), Name = c("(Intercept)",
+"r1:c3", "r1:c2", "r1:c1", "c8", "c6", "c4", "c3", "c2", "c1",
+"r10", "r8", "r4", "r2", "r1", ""), Variance = c(2869.45, 5531.6,
+58225.75, 128003.6, 6455.77, 1399.73, 1791.65, 2548.89, 5941.8,
+0, 1132.95, 1355.23, 2268.73, 241.79, 9199.94, 4412.11), Std.Dev. = c(53.567,
+74.375, 241.3, 357.776, 80.348, 37.413, 42.328, 50.486, 77.083,
+0, 33.659, 36.813, 47.631, 15.55, 95.916, 66.424)), .Names = c("Groups",
+"Name", "Variance", "Std.Dev."), class = "data.frame", row.names = c(NA,
 -16L))
-d2 <- structure(list(Groups = c("new.gen", "one", "one.1", "one.2", 
-"one.3", "one.4", "one.5", "one.6", "one.7", "one.8", "one.9", 
-"one.10", "one.11", "one.12", "one.13", "Residual"), Name = c("(Intercept)", 
-"r1:c3", "r1:c2", "r1:c1", "c8", "c6", "c4", "c3", "c2", "c1", 
-"r10", "r8", "r4", "r2", "r1", ""), Variance = c(3230, 7690, 
-69800, 107000, 6790, 1640, 12300, 2690, 7640, 0.000956, 1980, 
-1240, 2810, 928, 10400, 4130), Std.Dev. = c(56.81831, 87.675211, 
-264.123506, 327.750047, 82.381314, 40.446339, 110.764195, 51.831045, 
-87.435345, 0.030918, 44.446766, 35.234043, 53.020431, 30.465617, 
-101.80296, 64.240858)), .Names = c("Groups", "Name", "Variance", 
+d2 <- structure(list(Groups = c("new.gen", "one", "one.1", "one.2",
+"one.3", "one.4", "one.5", "one.6", "one.7", "one.8", "one.9",
+"one.10", "one.11", "one.12", "one.13", "Residual"), Name = c("(Intercept)",
+"r1:c3", "r1:c2", "r1:c1", "c8", "c6", "c4", "c3", "c2", "c1",
+"r10", "r8", "r4", "r2", "r1", ""), Variance = c(3230, 7690,
+69800, 107000, 6790, 1640, 12300, 2690, 7640, 0.000956, 1980,
+1240, 2810, 928, 10400, 4130), Std.Dev. = c(56.81831, 87.675211,
+264.123506, 327.750047, 82.381314, 40.446339, 110.764195, 51.831045,
+87.435345, 0.030918, 44.446766, 35.234043, 53.020431, 30.465617,
+101.80296, 64.240858)), .Names = c("Groups", "Name", "Variance",
 "Std.Dev."), class = "data.frame", row.names = c(NA, -16L))
 @
 The default printing is shown first.
@@ -313,7 +312,7 @@ cbind(d1,d2[,3:4])
 Do the two optimization methods give similar results?  It is difficult
 to compare the results due to the clutter of extra digits, and even
 more importantly, because of a quirk in the way R formats the output.
-The variances in column 3 are shown in non-scientific format, while 
+The variances in column 3 are shown in non-scientific format, while
 the variances in column 5 are shown in scientific format!
 
 The \code{lucid} function is now used to show the results.
@@ -321,16 +320,15 @@ The \code{lucid} function is now used to show the results.
 lucid(cbind(d1,d2[,3:4]))
 @
 The formatting of the variance columns is now consistent and simplified
-with fewer digits shown.  It is easy to compare the columns and see 
+with fewer digits shown.  It is easy to compare the columns and see
 that the two optimizers are giving quite different answers.
 
 % ----------------------------------------------------------------------------
 
 \section{Appendix}
-This document was prepared \today \, with the following configuration:
 
+Session information:
 <<finish, echo=FALSE, results="asis">>=
-# knit_hooks$set(output = function(x, options) { x })
 toLatex(sessionInfo(), locale=FALSE)
 @
 

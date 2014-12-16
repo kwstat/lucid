@@ -1,10 +1,10 @@
 Package: lucid
-Version: 1.1
-Date: 2014-12-15
+Version: 1.0
+Date: 2014-11-24
 Title: Lucid Printing of Floating Point Numbers
 Author: Kevin Wright <kw.stat@gmail.com>
 Maintainer: Kevin Wright <kw.stat@gmail.com>
-Description: Print vectors (and data frames) of floating point numbers using a non-scientific format optimized for human readers.  Vectors of numbers are rounded using significant digits, aligned at the decimal point, and all zeros trailing the decimal point are dropped.
+Description: Print vectors (and data frames) of floating point numbers using a non-scientific format optimized for human readers.  Vectors of numbers are rounded using significant digits, aligned at the decimal point, and all zeros trailing the decimal point are dropped.  
 LazyData: yes
 License: GPL-2
 URL: https://github.com/kwstat/lucid
