@@ -7,17 +7,17 @@
 \alias{lucid.numeric}
 \title{Lucid printing}
 \usage{
-lucid(x, dig = 3, na.replace=NULL, ...)
+lucid(x, dig = 3, na.value=NULL, ...)
 
-\method{lucid}{default}(x, dig = 3, na.replace=NULL, ...)
+\method{lucid}{default}(x, dig = 3, na.value=NULL, ...)
 
-\method{lucid}{numeric}(x, dig = 3, na.replace=NULL, ...)
+\method{lucid}{numeric}(x, dig = 3, na.value=NULL, ...)
 
-\method{lucid}{data.frame}(x, dig = 3, na.replace=NULL, ...)
+\method{lucid}{data.frame}(x, dig = 3, na.value=NULL, ...)
 
-\method{lucid}{matrix}(x, dig = 3, na.replace=NULL, ...)
+\method{lucid}{matrix}(x, dig = 3, na.value=NULL, ...)
 
-\method{lucid}{list}(x, dig = 3, na.replace=NULL, ...)
+\method{lucid}{list}(x, dig = 3, na.value=NULL, ...)
 }
 
 \arguments{
@@ -25,8 +25,8 @@ lucid(x, dig = 3, na.replace=NULL, ...)
 
 \item{dig}{Number of significant digits to use in printing.}
 
-\item{na.replace}{Character string to use instead of 'NA'.  Default is
-  NULL, which does nothing.}
+\item{na.value}{Character string to use instead of 'NA' for numeric
+  missing values. Default is NULL, which does nothing.}
 
 \item{...}{Additional arguments passed to the data.frame method.}
 
@@ -61,7 +61,7 @@ print(x0)
 lucid(x0, dig=2)
 
 x1 <- c(123, NA, 1.23, NA)
-lucid(x1, na.replace="-")
+lucid(x1, na.value="-")
 
 signif(mtcars[15:20,])
 lucid(mtcars[15:20,])

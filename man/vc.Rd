@@ -67,6 +67,9 @@ vc(ma)
 ##  Rail!Rail.var    615.3      392.6     1.6    pos
 ##     R!variance     16.17       6.6     2.4    pos
 
+# To change the number of digits, use the print function.
+print(vc(m3), dig=5)
+
 }
 }
 

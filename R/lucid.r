@@ -1,5 +1,5 @@
 # lucid.r
-# Time-stamp: <15 Dec 2014 17:09:51 c:/x/rpack/lucid/R/lucid.r>
+# Time-stamp: <10 Feb 2015 17:09:07 c:/x/rpack/lucid/R/lucid.r>
 
 # lucid is primarily a _formatting_ function similar to
 # 'round' and 'signif', but output is always character.
@@ -13,16 +13,16 @@
 # print methods for the class, but that seems like overkill...
 
 
-lucid <- function(x, dig=3, na.replace=NULL, ...) UseMethod("lucid")
+lucid <- function(x, dig=3, na.value=NULL, ...) UseMethod("lucid")
 
 
-lucid.default <- function(x, dig=3, na.replace=NULL, ...) {
+lucid.default <- function(x, dig=3, na.value=NULL, ...) {
   # By default, no change to formatting
   return(x)
 }
 
 
-lucid.numeric <- function(x, dig=3, na.replace=NULL, ...) {
+lucid.numeric <- function(x, dig=3, na.value=NULL, ...) {
   # This is the main function that formats a vector, but NO PRINTING
 
   # Use 4 significant digits, drop trailing zero, align decimals
@@ -30,32 +30,33 @@ lucid.numeric <- function(x, dig=3, na.replace=NULL, ...) {
     xx <- format(format(signif(zapsmall(x), dig),
                         scientific=FALSE, drop0trailing=TRUE))
 
-    # Maybe change "NA" to something else
-    if(!is.null(na.replace)) xx <- gsub("NA", na.replace, xx)
+    # Maybe change NA to something else.  Note that formatting
+    # has changed NA to "NA"
+    if(!is.null(na.value)) xx <- gsub("NA", na.value, xx)
 
   } else xx <- x
 
   return(xx)
 }
 
-lucid.data.frame <- function(x, dig=3, na.replace=NULL, ...){
-  x[] <- lapply(x, lucid, dig, na.replace)
+lucid.data.frame <- function(x, dig=3, na.value=NULL, ...){
+  x[] <- lapply(x, lucid, dig, na.value)
   x
 }
 
 
-lucid.matrix <- function(x, dig=3, na.replace=NULL, ...){
-  x[] <- apply(x, 2, lucid, dig, na.replace)
+lucid.matrix <- function(x, dig=3, na.value=NULL, ...){
+  x[] <- apply(x, 2, lucid, dig, na.value)
   x
 }
 
 
-lucid.list <- function(x, dig=3, na.replace=NULL, ...){
+lucid.list <- function(x, dig=3, na.value=NULL, ...){
   #  for(ii in 1:length(x)){
   #    cat(names(x)[ii], ":\n")
-  #    lucid(x[[ii]], dig=dig, na.replace=na.replace)
+  #    lucid(x[[ii]], dig=dig, na.value=na.value)
   #  }
-  x[] <- lapply(x, lucid, dig, na.replace)
+  x[] <- lapply(x, lucid, dig, na.value)
   x
 }
 
@@ -72,8 +73,8 @@ if(FALSE){
   lucid(lvec)
   lvec <- c(1.23, NA, 123, 123000)
   lucid(lvec)
-  lucid(lvec, na.replace="")
-  lucid(lvec, na.replace="-")
+  lucid(lvec, na.value="")
+  lucid(lvec, na.value="-")
 
   # data.frame
   ldf <- mtcars[1:10,]

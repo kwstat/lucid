@@ -1,5 +1,5 @@
 # vc.r
-# Time-stamp: <15 Dec 2014 16:40:01 c:/x/rpack/lucid/R/vc.r>
+# Time-stamp: <06 Jan 2015 15:04:32 c:/x/rpack/lucid/R/vc.r>
 
 # The 'vc' function extracts the variance components from
 # a fitted model.
@@ -78,7 +78,7 @@ vc.lme <- function(object, ...) {
 }
 print.vc.lme <- function(x, dig=4, ...) {
   class(x) <- class(x)[-1] # remove vc.lme
-  x[] <- lapply(x, lucid, dig)
+  x[] <- lapply(x, lucid, dig, ...)
   print(x, quote=FALSE, row.names=FALSE)
   return()
 }
@@ -101,9 +101,13 @@ vc.lmerMod <- function(object, ...) {
 
 print.vc.lmerMod <- function(x, dig=4, ...){
   class(x) <- class(x)[-1] # remove vc.lmerMod
-  x[] <- lapply(x, lucid, dig)
-  #x[] <- lapply(x, function(xx) {
-  #                            gsub("<NA>", "", xx) })
+  x[] <- lapply(x, lucid, dig, ...)
+
+  # Replace NA_character_ with ""
+
+  # x[] <- lapply(x, function(xx) { gsub("<NA>", "", xx) })
+  # x[] <- lapply(x, function(xx) { xx[is.na(xx)] <- "" })
+
   print(x, row.names=FALSE)
   return()
 }
