@@ -1,5 +1,5 @@
 # lucid.r
-# Time-stamp: <10 Feb 2015 17:09:07 c:/x/rpack/lucid/R/lucid.r>
+# Time-stamp: <25 Mar 2015 15:32:23 c:/x/rpack/lucid/R/lucid.r>
 
 # lucid is primarily a _formatting_ function similar to
 # 'round' and 'signif', but output is always character.
@@ -7,11 +7,12 @@
 # The returned values are printed with regular R methods.
 
 # Note that R prints character vectors/matrices with quotes,
-# but prints data.frames without quotes.
+# but prints data.frames without quotes.  Use 'noquote'.
 
 # We could define a new class for lucid output and define
 # print methods for the class, but that seems like overkill...
 
+# Adding a comment that should not appear in branch 1.1
 
 lucid <- function(x, dig=3, na.value=NULL, ...) UseMethod("lucid")
 
@@ -64,6 +65,8 @@ lucid.list <- function(x, dig=3, na.value=NULL, ...){
 
 if(FALSE){
 
+  require(lucid)
+  
   # Default
   lucid(letters)
 
@@ -83,7 +86,7 @@ if(FALSE){
   lucid(ldf, na="")
   lucid(ldf, na="-")
   lucid(ldf, dig=2, na="-")
-
+  
   # matrix
   lmat <- as.matrix(mtcars[1:10,])
   lmat[5,1] <- lmat[4,2] <- lmat[6,3] <- lmat[3,4] <- NA
@@ -91,6 +94,10 @@ if(FALSE){
   lucid(lmat, na="")
   lucid(lmat, na=" -")
   lucid(lmat, dig=2, na="-")
+  # To omit quotes from matrix output
+  noquote(lucid(lmat, dig=2, na="-"))
+  print(lucid(lmat, dig=2, na="-"), quote=FALSE)
+  #prmatrix(lucid(lmat, dig=2, na="-"))
 
   # list
   ll <- list(lvec=lvec, ldf=ldf, lmat=lmat)
