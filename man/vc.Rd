@@ -5,6 +5,7 @@
 \alias{vc.default}
 \alias{vc.lme}
 \alias{vc.lmerMod}
+\alias{vc.mcmc.list}
 
 \title{Extract variance components from mixed models}
 
@@ -13,11 +14,13 @@
 
   \method{vc}{default} (object, ...)
 
-  \method{vc}{lmerMod} (object, ...)
+  \method{vc}{asreml} (object, gamma = FALSE, ...)
 
   \method{vc}{lme} (object, ...)
 
-  \method{vc}{asreml} (object, gamma = FALSE, ...)
+  \method{vc}{lmerMod} (object, ...)
+
+  \method{vc}{mcmc.list} (object, quantiles=c(0.025, 0.5, 0.975), ...)
 }
 
 \arguments{
@@ -26,7 +29,9 @@
   \item{...}{Not used. Extra arguments.}
 
   \item{gamma}{If gamma=FALSE, then the 'gamma' column is
-  omitted from the results}
+    omitted from the results}
+
+  \item{quantiles}{The quantiles to use for printing mcmc.list objects}
 }
 
 \value{
@@ -35,7 +40,8 @@
 
 \description{
   Extract the variance components from a fitted model.
-  Currently supports \code{asreml}, \code{lme4}, \code{nlme} objects.
+  Currently supports \code{asreml}, \code{lme4}, \code{nlme} and
+  \code{mcmc.list} objects.
 
   The extracted variance components are stored in a data frame with an
   additional 'vc.xxx' class that has an associated print method.
@@ -66,6 +72,8 @@ vc(ma)
 ##         effect component std.error z.ratio constr
 ##  Rail!Rail.var    615.3      392.6     1.6    pos
 ##     R!variance     16.17       6.6     2.4    pos
+
+# See vignette for rjags example
 
 # To change the number of digits, use the print function.
 print(vc(m3), dig=5)

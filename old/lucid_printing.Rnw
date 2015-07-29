@@ -1,8 +1,8 @@
 % lucid_printing.Rnw
-% Time-stamp: <09 Jan 2015 08:53:25 c:/x/rpack/lucid/vignettes/lucid_printing.Rnw>
+% Time-stamp: <02 Jul 2015 12:53:41 c:/x/rpack/lucid/vignettes/lucid_printing.Rnw>
 
 % \VignetteEngine{knitr::knitr}
-% \VignetteIndexEntry{Lucid printing}
+% \VignetteIndexEntry{Lucid printing of floating-point vectors}
 
 \documentclass[12pt]{article}
 % Note, 11 pt fails with a missing font unless we have \usepackage{ae}
@@ -48,7 +48,7 @@
 
 \begin{document}
 
-\title{Lucid printing}
+\title{Lucid printing of floating-point vectors}
 \author{Kevin Wright}
 \maketitle
 \thispagestyle{fancy}
@@ -68,7 +68,7 @@ point numbers in a human-friendly format.  An application is presented for
 printing of variance components from mixed models.
 
 % ----------------------------------------------------------------------------
-\section{Intro}
+\section{Introduction}
 
 Numerical output from R is often in scientific notation, which can make it
 difficult to quickly glance at numbers and understand the relative sizes
@@ -107,6 +107,10 @@ rounding:
 \item We can only rarely justify more than three digits of accuracy statistically.
 \end{enumerate}
 
+An alternative to significant digits is the concept of ``effective digits'' 
+\citep{ehrenberg1977rudiments, kozak2011reporting}, which considers the amount
+of variation in the data.
+
 In R, using the \code{round} and \code{signif} functions can be used to round
 to 3 digits of accuracy, but those functions
 can still print results in scientific notation
@@ -122,7 +126,7 @@ df1 <- data.frame(effect=c(-13.5, 4.5,  24.5, 6.927792e-14, -1.75,
 rownames(df1) <- c("A","B","C","C1","C2","D","(Intercept)")
 print(df1)
 @
-Which coeficient is basically zero?  How large is the intercept?
+Which coeficient is zero?  How large is the intercept?
 
 Both questions can be answered using the output shown above, but it
 takes too much effort to answer the questions.  Now examine the same
@@ -132,7 +136,7 @@ require("lucid")
 options(digits=7) # knitr defaults to 4, R console uses 7
 lucid(df1)
 @
-Which coeficient is basically zero?  How large is the intercept?
+Which coeficient is zero?  How large is the intercept?
 
 Printing the numbers with the \code{lucid} function has made the
 questions much easier to answer.
@@ -232,7 +236,7 @@ function is not available for models obtained using the \code{asreml}
 
 The \code{lucid} package provides a generic function called \code{vc} that
 provides a unified interface for extracting the variance components from
-fitted models obtained from the \code{nlme}, \code{lme4}, and \code{asreml}
+fitted models obtained from the \code{asreml}, \code{lme4}, \code{nlme}, and \code{rjags} 
 packages.  The \code{vc} function has methods specific to each package that
 make it easy to extract the estimated variances and correlations from fitted
 models and formats the results using the \code{lucid} function.
@@ -243,10 +247,16 @@ function uses a similar philosophy, presenting the variances with four
 significant digits and \code{asreml} $Z$ statistics with two significant
 digits.
 
+% ----------------------------------------------------------------------------
+
+\subsection{Example 1 - Rail data}
+
 The following simple example illustrates use of the \code{vc} function for
-identical models in the \code{nlme}, \code{lme4}, and \code{asreml} packages.
+identical REML models in the \code{nlme}, \code{lme4}, and \code{asreml} packages.
 The travel times of ultrasonic waves in six steel rails was modeled as an
 overall mean, a random effect for each rail, and a random residual.
+The package \code{rjags} is used to fit a similar Bayesian model inspired by
+\cite{wilkinson2014oneway}.
 
 <<message=FALSE>>=
 require("nlme")
@@ -266,13 +276,54 @@ vc(m4)
 ##     R!variance     16.17       6.6     2.4    pos
 @
 
+In a Bayesian model all effects can be considered as random.
+
+<<message=FALSE>>=
+require("nlme")
+data(Rail)
+require("rjags")
+m5 <-
+"model {
+for(i in 1:nobs){
+  travel[i] ~ dnorm(mu + theta[Rail[i]], tau)
+}
+for(j in 1:6) {
+  theta[j] ~ dnorm(0, tau.theta)
+}
+mu ~ dnorm(50, 0.0001) # Overall mean. dgamma() 
+tau ~ dgamma(1, .001)
+tau.theta ~ dgamma(1, .001)
+residual <- 1/sqrt(tau)
+sigma.rail <- 1/sqrt(tau.theta)
+}"
+jdat <- list(nobs=nrow(Rail), travel=Rail$travel, Rail=Rail$Rail)
+jinit <- list(mu=50, tau=1, tau.theta=1)
+tc5 <- textConnection(m5)
+j5 <- jags.model(tc5, data=jdat, inits=jinit, n.chains=2, quiet=TRUE)
+close(tc5)
+c5 <- coda.samples(j5, c("mu","theta", "residual", "sigma.rail"), 
+                   n.iter=100000, thin=5)
+@ 
+<<>>=
+vc(c5)
+@
+Compare these JAGS point estimates and quantiles with the results from \code{lme4}.
+<<>>=
+m4
+ranef(m4)
+@
+
 While the \code{lucid} function is primarily a formatting function and uses
 the standard \code{print} functions in R, the \code{vc} function defines an
 additional class for the value of the function and has dedicated \code{print}
 methods for the class.  This was done to allow additional formatting of the
 results.
 
-The second, more complex example is based on a paper by \cite{federer2003proc}
+% ----------------------------------------------------------------------------
+
+\subsection{Example 2 - federer.diagcheck data}
+
+The second, more complex example is based on a model in \cite{federer2003proc}
 in which orthogonal polynomials are used to model trends along the rows and
 columns of a field experiment.  The data are available in the \code{agridat}
 package \cite{wright2014agridat} as the \code{federer.diagcheck} data frame.
@@ -283,7 +334,9 @@ optimizers lead to similar estimated variances?
 
 In the output below, the first column identifies terms in the model, the next
 two columns are the variance and standard deviation from the \texttt{bobyqa}
-optimizer, while the final two columns are from the \texttt{NelderMead} optimizer.
+optimizer, while the final two columns are from the \texttt{NelderMead}
+optimizer.  These results are from \code{lme4} version 1.1-7 and are likely to
+be different for later versions of \code{lme4}
 
 \pagebreak
 
@@ -328,7 +381,7 @@ NA_character_, NA_character_, NA_character_, NA_character_),
     0.0350020449620779, 44.4466514904597, 35.23391156595, 53.02113582256,
     30.4668257838069, 101.801694293536, 64.2404210017051)), .Names = c("grp",
 "var1", "var2", "vcov", "sdcor"), row.names = c(NA, -16L), class = "data.frame")
-out <- cbind(d1[, c(2,4,5)], sep="|",d2[,4:5])
+out <- cbind(d1[, c(2,4,5)], sep="   ",d2[,4:5])
 names(out) <- c('term','vcov-bo','sdcor-bo','sep','vcov-ne','sdcor-ne')
 @
 <<>>=
@@ -352,38 +405,11 @@ the standard deviation columns.  Fewer digits are shown.  It is easy to
 compare the columns and see that the two optimizers are giving quite different
 answers.
 
-
-% Look at the raw/lucid table of variance components below.
-% Which are the smallest/largest/significant variance components?
-% <<echo=TRUE>>=
-% df2 <- data.frame(effect=c('hyb','region','region:loc','hyb:region','yr','hyb:yr','region:yr','residual'),
-%                   component=c(10.9,277,493,1.30E-04,126,22.3,481,268),
-%                   std.error=c(4.40,166,26.1,1.58E-06,119,4.50,108,3.25),
-%                   z.ratio=c(2.471,1.669,18.899,82.242,1.060,4.951,4.442,82.242),
-%                   constraint=c('pos','pos','pos','bnd','pos','pos','pos','pos'))
-% print(df2)
-% @
-% <<echo=TRUE>>=
-% lucid(df2)
-% @
-
-%Note the similarity in overall shape of the positions of the leftmost
-%significant digit in the 'component' column of the lucid output and
-%the dotplot of the components on a log10 scale.  See \cite{gelman2011tables}.
-%<<fig.height=4>>=
-%df2$effect <- factor(df2$effect, levels=rev(df2$effect))
-%require(lattice)
-%dotplot(effect~ log10(component), data=df2,
-%        cex=1, xlim=c(3,-4), xlab="variance component (log10 scale)",
-%        scales=list(x=list(lab=rev(c('1000','100','10','1','.1','.01','.001'
-%,'.0001')))))
-%@
-
-
-% ----------------------------------------------------------------------------
-
-\section{Summary}
-
+Note.  Numeric matrices are printed with quotes.  Use \code{noquote()} to
+print without quotes, for example:
+<<>>=
+noquote(lucid(as.matrix(head(mtcars)),2))
+@ 
 
 \section{Acknowledgements}
 

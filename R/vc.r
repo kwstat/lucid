@@ -1,5 +1,5 @@
 # vc.r
-# Time-stamp: <06 Jan 2015 15:04:32 c:/x/rpack/lucid/R/vc.r>
+# Time-stamp: <07 Apr 2015 14:44:44 c:/x/rpack/lucid/R/vc.r>
 
 # The 'vc' function extracts the variance components from
 # a fitted model.
@@ -112,6 +112,35 @@ print.vc.lmerMod <- function(x, dig=4, ...){
   return()
 }
 
+# ----- mcmc.list -----
+
+vc.mcmc.list <- function(object, quantiles=c(0.025, 0.5, 0.975), ...) {
+  s <- summary(object, quantiles=quantiles)
+  if(is.matrix(s$statistics)) {
+    dd <- cbind(as.data.frame(s$statistics[,c("Mean","SD")]),
+                s$quantiles[,1],
+                s$quantiles[,2],
+                s$quantiles[,3])
+  } else { # only 1 row (which is not a matrix)
+
+    dd <- cbind(as.data.frame(t(s$statistics[c("Mean","SD")])),
+                s$quantiles[1],
+                s$quantiles[2],
+                s$quantiles[3])
+    rownames(dd) <- "" # variable name is not available !
+  }
+  colnames(dd) <- c('Mean','SD','2.5%','Median','97.5%')
+  class(dd) <- c("vc.mcmc.list", class(dd))
+  return(dd)       
+}
+print.vc.mcmc.list <- function(x, dig=4, ...){
+  class(x) <- class(x)[-1] # remove vc.mcmc.list
+  x[] <- lapply(x, lucid, dig, ...)
+  print(x)
+  return()
+}
+
+
 # ----- tests -----
 
 if(FALSE) {
@@ -128,7 +157,5 @@ if(FALSE) {
   require("asreml")
   m1a <- asreml(travel~1, random=~Rail, data=Rail)
   vc(m1a)
-
+  
 }
-
-
