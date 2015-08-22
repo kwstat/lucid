@@ -1,9 +1,13 @@
 # vc.r
-# Time-stamp: <07 Apr 2015 14:44:44 c:/x/rpack/lucid/R/vc.r>
+# Time-stamp: <30 Jul 2015 12:41:51 c:/x/rpack/lucid/R/vc.r>
 
 # The 'vc' function extracts the variance components from
 # a fitted model.
 # The print methods use 'lucid' to format the output.
+
+# Beware!  print() methods must return the object via invisible()
+# Without invisible(), devtools::run_examples was giving me weird
+# error messages from replay() on NULL objects
 
 vc <- function(object, ...) UseMethod("vc")
 
@@ -52,7 +56,8 @@ print.vc.asreml  <- function(x, dig=4, ...){
   levels(x$constr)[levels(x$constr)=="Unconstrained"] <- "unc"
 
   print(x, row.names=FALSE) # Do not print row numbers
-  return()
+  #return()
+  invisible(x)
 }
 
 # ----- lme -----
@@ -80,7 +85,8 @@ print.vc.lme <- function(x, dig=4, ...) {
   class(x) <- class(x)[-1] # remove vc.lme
   x[] <- lapply(x, lucid, dig, ...)
   print(x, quote=FALSE, row.names=FALSE)
-  return()
+  #return()
+  invisible(x)
 }
 
 # ----- lme4 -----
@@ -109,7 +115,8 @@ print.vc.lmerMod <- function(x, dig=4, ...){
   # x[] <- lapply(x, function(xx) { xx[is.na(xx)] <- "" })
 
   print(x, row.names=FALSE)
-  return()
+  #return()
+  invisible(x)
 }
 
 # ----- mcmc.list -----
@@ -137,7 +144,8 @@ print.vc.mcmc.list <- function(x, dig=4, ...){
   class(x) <- class(x)[-1] # remove vc.mcmc.list
   x[] <- lapply(x, lucid, dig, ...)
   print(x)
-  return()
+  #return()
+  invisible()
 }
 
 

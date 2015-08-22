@@ -5,6 +5,8 @@
 
 * Change NEWS to NEWS.md.
 
+* Fixed bug--`vc()` now returns `invisible(x)` instead of `return()`.
+
 # lucid 1.3 - Jun 2015
 
 * Namespace changes due to R devel changes.

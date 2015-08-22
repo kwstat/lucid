@@ -142,7 +142,7 @@ The figure below shows a dotplot of the penicillin values on a reverse log10
 scale.  The values are also shown along the right axis in `lucid` format.
 Note the similarity in the overall shape of the dots and the positions of the
 left-most significant digit in the numerical value.
-```{r echo=FALSE, message=FALSE, fig.height=4, fig.width=6}
+```{r dotplot, echo=FALSE, message=FALSE, fig.height=4, fig.width=6}
 require(lattice)
 anti=antibiotic # make a copy of the data to reverse the levels
 anti$bacteria <- factor(anti$bacteria, levels=rev(anti$bacteria))
