@@ -1,5 +1,5 @@
 # vc.r
-# Time-stamp: <30 Jul 2015 12:41:51 c:/x/rpack/lucid/R/vc.r>
+# Time-stamp: <01 Sep 2015 17:18:03 c:/x/rpack/lucid/R/vc.r>
 
 # The 'vc' function extracts the variance components from
 # a fitted model.
@@ -9,18 +9,75 @@
 # Without invisible(), devtools::run_examples was giving me weird
 # error messages from replay() on NULL objects
 
+
+
+#' Extract variance components from mixed models
+#' 
+#' Extract the variance components from a fitted model.  Currently supports
+#' \code{asreml}, \code{lme4}, \code{nlme} and \code{mcmc.list} objects.
+#' 
+#' The extracted variance components are stored in a data frame with an
+#' additional 'vc.xxx' class that has an associated print method.
+#' 
+#' 
+#' @param object A fitted model object
+#' @param ... Not used. Extra arguments.
+#' @return A data frame or other object.
+#' @examples
+#' 
+#' \dontrun{
+#' 
+#' require("nlme")
+#' data(Rail)
+#' m3 <- lme(travel~1, random=~1|Rail, data=Rail)
+#' vc(m3)
+#' ##       effect variance stddev
+#' ##  (Intercept)   615.3  24.81
+#' ##     Residual    16.17  4.021
+#' 
+#' require("lme4")
+#' m4 <- lmer(travel~1 + (1|Rail), data=Rail)
+#' vc(m4)
+#' ##      grp        var1 var2   vcov  sdcor
+#' ##     Rail (Intercept) <NA> 615.3  24.81
+#' ## Residual        <NA> <NA>  16.17  4.021 
+#' 
+#' require("asreml")
+#' ma <- asreml(travel~1, random=~Rail, data=Rail)
+#' vc(ma)
+#' ##         effect component std.error z.ratio constr
+#' ##  Rail!Rail.var    615.3      392.6     1.6    pos
+#' ##     R!variance     16.17       6.6     2.4    pos
+#' 
+#' # See vignette for rjags example
+#' 
+#' # To change the number of digits, use the print function.
+#' print(vc(m3), dig=5)
+#' 
+#' }
+#' 
+#' @rdname vc
+#' @export
 vc <- function(object, ...) UseMethod("vc")
+
 
 # ----- default -----
 
+#' @rdname vc
+#' @export
 vc.default <- function(object, ...) {
   stop("No default method exists for 'vc'.")
 }
 
+
 # ----- asreml -----
 
+
+#' @param gamma If gamma=FALSE, then the 'gamma' column is omitted from the
+#' results from asreml
+#' @rdname vc
+#' @export
 vc.asreml <- function (object, gamma=FALSE, ...) {
-  # Kevin Wright
 
   vv <- summary(object)$varcomp
   if(gamma==FALSE)
@@ -35,8 +92,9 @@ vc.asreml <- function (object, gamma=FALSE, ...) {
   return(vv)
 }
 
+#' @export
 print.vc.asreml  <- function(x, dig=4, ...){
-  # Kevin Wright
+
   class(x) <- class(x)[-1] # remove vc.asreml
 
   # Use 2 signif decimals for z.ratio
@@ -56,20 +114,25 @@ print.vc.asreml  <- function(x, dig=4, ...){
   levels(x$constr)[levels(x$constr)=="Unconstrained"] <- "unc"
 
   print(x, row.names=FALSE) # Do not print row numbers
-  #return()
   invisible(x)
 }
 
 # ----- lme -----
 
+#' @rdname vc
+#' @importFrom nlme VarCorr
+#' @export
 vc.lme <- function(object, ...) {
-  # Kevin Wright
-  vv <- nlme::VarCorr(object)
+
+  vv <- VarCorr(object)
   vv <- as.matrix(vv)
 
   # Convert from text to numeric matrix, then to data.frame
-  nm <- rownames(vv)
-  nm <- factor(nm, levels=nm) # prevent alphanum sorting
+  # In the agridat::yates.oats examples, we had row names like this:
+  # "block =" "(Intercept)" "gen =" "(Intercept)" "Residual"
+  # So we use make.unique to prevent a warning about duplicated levels
+  nm <- make.unique(rownames(vv))
+  nm <- factor(nm, levels=nm) # prevent alphanum sorting later
 
   v2 <- apply(vv, 2, function(x) suppressWarnings(as.numeric(x)))
   v2 <- as.data.frame(v2)
@@ -81,16 +144,20 @@ vc.lme <- function(object, ...) {
   class(v2) <- c("vc.lme", class(v2))
   return(v2)
 }
+
+#' @export
 print.vc.lme <- function(x, dig=4, ...) {
   class(x) <- class(x)[-1] # remove vc.lme
   x[] <- lapply(x, lucid, dig, ...)
   print(x, quote=FALSE, row.names=FALSE)
-  #return()
   invisible(x)
 }
 
 # ----- lme4 -----
 
+#' @rdname vc
+#' @importFrom nlme VarCorr
+#' @export
 vc.glmerMod <- function(object, ...) {
   dd <- as.data.frame(VarCorr(object))
   class(dd) <- c("vc.lmerMod", class(dd))
@@ -98,6 +165,9 @@ vc.glmerMod <- function(object, ...) {
 
 }
 
+#' @rdname vc
+#' @importFrom nlme VarCorr
+#' @export
 vc.lmerMod <- function(object, ...) {
   dd <- as.data.frame(VarCorr(object))
   # Remove <NA>
@@ -105,6 +175,7 @@ vc.lmerMod <- function(object, ...) {
   return(dd)
 }
 
+#' @export
 print.vc.lmerMod <- function(x, dig=4, ...){
   class(x) <- class(x)[-1] # remove vc.lmerMod
   x[] <- lapply(x, lucid, dig, ...)
@@ -115,12 +186,14 @@ print.vc.lmerMod <- function(x, dig=4, ...){
   # x[] <- lapply(x, function(xx) { xx[is.na(xx)] <- "" })
 
   print(x, row.names=FALSE)
-  #return()
   invisible(x)
 }
 
 # ----- mcmc.list -----
 
+#' @rdname vc
+#' @param quantiles The quantiles to use for printing mcmc.list objects
+#' @export
 vc.mcmc.list <- function(object, quantiles=c(0.025, 0.5, 0.975), ...) {
   s <- summary(object, quantiles=quantiles)
   if(is.matrix(s$statistics)) {
@@ -140,11 +213,12 @@ vc.mcmc.list <- function(object, quantiles=c(0.025, 0.5, 0.975), ...) {
   class(dd) <- c("vc.mcmc.list", class(dd))
   return(dd)       
 }
+
+#' @export
 print.vc.mcmc.list <- function(x, dig=4, ...){
   class(x) <- class(x)[-1] # remove vc.mcmc.list
   x[] <- lapply(x, lucid, dig, ...)
   print(x)
-  #return()
   invisible()
 }
 

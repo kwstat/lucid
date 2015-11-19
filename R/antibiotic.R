@@ -1,0 +1,76 @@
+
+#' Effectiveness of 3 antibiotics against 16 bacterial species.
+#' 
+#' Effectiveness of 3 antibiotics against 16 bacterial species.
+#' 
+#' The values reported are the minimum inhibitory concentration (MIC) in
+#' microgrms/milliliter, which represents the concentration of antibiotic
+#' required to prevent growth in vitro.
+#' 
+#' @name antibiotic
+#' @docType data
+#' @format A data frame with 16 observations on the following 5 variables.
+#' \describe{ 
+#' \item{\code{bacteria}}{bacterial species, 16 levels}
+#' \item{\code{penicillin}}{MIC for penicillin}
+#' \item{\code{streptomycin}}{MIC for streptomycin}
+#' \item{\code{neomycin}}{MIC for neomycin} 
+#' \item{\code{gramstain}}{Gram staining (positive or negative)} 
+#' }
+#' @source Will Burtin (1951). \emph{Scope}.  Fall, 1951.
+#' @references
+#' 
+#' Wainer, H. (2009). A Centenary Celebration for Will Burtin: A Pioneer of
+#' Scientific Visualization.  \emph{Chance}, 22(1), 51-55.
+#' \url{http://chance.amstat.org/2009/02/visrev221/}
+#' 
+#' Wainer, H. (2009). Visual Revelations: Pictures at an Exhibition.
+#' \emph{Chance}, 22(2), 46--54.
+#' \url{http://chance.amstat.org/2009/04/visrev222/}
+#' 
+#' Wainer, H. (2014). Medical Illuminations: Using Evidence, Visualization and
+#' Statistical Thinking to Improve Healthcare.
+#' @keywords datasets
+#' @examples
+#' 
+#' data(antibiotic)
+#' lucid(antibiotic)
+#' 
+#' \dontrun{
+#' # Plot the data similar to Fig 2.14 of Wainer's book, "Medical Illuminations"
+#' 
+#' require(lattice)
+#' require(reshape2)
+#' 
+#' # Use log10 transform
+#' dat <- transform(antibiotic,
+#'                  penicillin=log10(penicillin),
+#'                  streptomycin=log10(streptomycin),
+#'                  neomycin=log10(neomycin))
+#' dat <- transform(dat, sgn = ifelse(dat$gramstain=="neg", "-", "+"))
+#' dat <- transform(dat,
+#'                  bacteria = paste(bacteria, sgn))
+#' dat <- transform(dat, bacteria=reorder(bacteria, -penicillin))
+#' 
+#' dat <- melt(dat)
+#' 
+#' op <- tpg <- trellis.par.get()
+#' tpg$superpose.symbol$pch <- toupper(substring(levels(dat$variable),1,1))
+#' tpg$superpose.symbol$col <- c("darkgreen","purple","orange")
+#' trellis.par.set(tpg)
+#' dotplot(bacteria ~ value, data=dat, group=variable,
+#'         cex=2,
+#'         scales=list(x=list(at= -3:3,
+#'                       labels=c('.001', '.01', '.1', '1', '10', '100', '1000'))),
+#'         main="Bacterial response to Neomycin, Streptomycin, and Penicillin",
+#'         xlab="Minimum Inhibitory Concentration (mg/L)")
+#' 
+#' trellis.par.set(op)
+#' 
+#' }
+#' 
+#' 
+NULL
+
+
+

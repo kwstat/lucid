@@ -5,7 +5,9 @@
 
 * Change NEWS to NEWS.md.
 
-* Fixed bug--`vc()` now returns `invisible(x)` instead of `return()`.
+* Now using Roxygen2 documentation.
+
+* Fixed bug: `vc()` now uses `invisible(x)` instead of `return()`.
 
 # lucid 1.3 - Jun 2015
 

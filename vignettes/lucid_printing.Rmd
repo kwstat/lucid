@@ -1,10 +1,9 @@
 ---
 title: "Lucid printing of floating-point vectors"
 author: "Kevin Wright"
-ate: "`r Sys.Date()`"
+date: "`r Sys.Date()`"
 output:
   html_document:
-    css: avenir-white.css
     highlight: tango
 bibliography: lucid.bib
 vignette: >
@@ -12,10 +11,17 @@ vignette: >
   % \VignetteEncoding{UTF-8}
   % \VignetteEngine{knitr::rmarkdown}
 ---
+<style type="text/css">
+body, td { font-size: 14pt; color: #000; padding:1em; }
+code, pre, #ws, #message { font-size: 12pt;
+  color: #000; background-color: #f5f5f5; }
+code {border: 1px solid #e0e0e0; padding: 0 5px;}
+pre > code { border: 0; }
+</style>
 
 ## Setup
 
-```{r setup, echo=FALSE, results="hide"}
+```{r setup, results="hide"}
 library("knitr")
 opts_chunk$set(fig.align="center", fig.width=6, fig.height=6)
 options(width=90)
@@ -24,9 +30,9 @@ options(width=90)
 
 ## Abstract
 
-The `lucid` package provides a function for printing vectors of floating
-point numbers in a human-friendly format.  An application is presented for
-printing of variance components from mixed models.
+The `lucid` package provides functions for printing vectors and tables of
+floating-point numbers in a human-friendly format.  An application is
+presented for printing of variance components from mixed models.
 
 
 ## Introduction
@@ -69,11 +75,10 @@ An alternative to significant digits is the concept of _effective digits_
 \citep{ehrenberg1977rudiments, kozak2011reporting}, which considers the amount
 of variation in the data.
 
-In R, using the `round()` and `signif()` functions can be used to round
-to 3 digits of accuracy, but those functions can still print results in
-scientific notation and leave much to be desired.
-The `lucid` package provides functions to improve the presentation of
-floating point numbers in a clear (or lucid)
+In R, using the `round()` and `signif()` functions can be used to round to 3
+digits of accuracy, but those functions can still print results in scientific
+notation and leave much to be desired.  The `lucid` package provides functions
+to improve the presentation of floating point numbers in a clear (or lucid)
 way that makes interpretation of the numbers immediately apparent.
 
 Consider the following vector of coefficients from a fitted model:
@@ -101,10 +106,10 @@ questions much easier to answer.
 The sequence of steps used by `lucid()` to format and
 print the output is.
 
-1. Zap small numbers to zero.
+1. Zap small numbers to zero using `zapsmall()`.
 2. Round using 3 significant digits (user controllable option).
 3. Drop trailing zeros.
-4. Align numbers at the decimal point.
+4. Align numbers at the decimal point (text format).
 
 The `lucid` package contains a generic function `lucid()` with
 specific methods for numeric vectors, data frames, and lists.
@@ -139,7 +144,7 @@ A stem-and-leaf plot is a semi-graphical display of data, in that the
 _positions_ of the numbers create a display similar to a histogram.  In a
 similar manner, the `lucid()` output is a semi-graphical view of the data.
 The figure below shows a dotplot of the penicillin values on a reverse log10
-scale.  The values are also shown along the right axis in `lucid` format.
+scale.  The values are also shown along the right axis in `lucid()` format.
 Note the similarity in the overall shape of the dots and the positions of the
 left-most significant digit in the numerical value.
 ```{r dotplot, echo=FALSE, message=FALSE, fig.height=4, fig.width=6}
@@ -152,9 +157,9 @@ cust <- myyscale.component <- function(...) {  #Custom y-scale function componen
   ans$right <- ans$left
   foo <- ans$right$labels$at
   ans$right$labels$labels <- rev(c(" 870    ","   1    ","   0.001","   0.005"," 100    ",
-                               "850    "," 800    ","   3    "," 850    ","   1    ",
-                               " 10    ","   0.007", "  0.03 ","   1    ",
-                               "  0.001","   0.005"))
+                                   " 850    "," 800    ","   3    "," 850    ","   1    ",
+                                   "  10    ","   0.007","   0.03 ","   1    ",
+                                   "   0.001","   0.005"))
   return(ans)
 }
 
@@ -206,16 +211,26 @@ overall mean, a random effect for each rail, and a random residual.
 The package `rjags` is used to fit a similar Bayesian model inspired by
 @wilkinson2014oneway.
 
-```{r message=FALSE}
+## nlme
+
+```{r nlme}
 require("nlme")
 data(Rail)
 mn <- lme(travel~1, random=~1|Rail, data=Rail)
 vc(mn)
+```
 
+# lme4
+
+```{r lme4}
 require("lme4")
 m4 <- lmer(travel~1 + (1|Rail), data=Rail)
 vc(m4)
+```
 
+# asreml
+
+```{r message=FALSE}
 # require("asreml")
 # ma <- asreml(travel~1, random=~Rail, data=Rail)
 # vc(ma)
@@ -224,9 +239,11 @@ vc(m4)
 ##     R!variance     16.17       6.6     2.4    pos
 ```
 
+# JAGS
+
 In a Bayesian model all effects can be considered as random.
 
-```{r message=FALSE}
+```{r jags, message=FALSE}
 require("nlme")
 data(Rail)
 require("rjags")
@@ -250,12 +267,14 @@ tc5 <- textConnection(m5)
 j5 <- jags.model(tc5, data=jdat, inits=jinit, n.chains=2, quiet=TRUE)
 close(tc5)
 c5 <- coda.samples(j5, c("mu","theta", "residual", "sigma.rail"), 
-                   n.iter=100000, thin=5)
+                   n.iter=100000, thin=5, progress.bar="none")
 ``` 
 ```{r}
 vc(c5)
 ```
-Compare these JAGS point estimates and quantiles with the results from `lme4`.
+Compare the JAGS point estimates and quantiles (above) with the results from
+`lme4` below.
+
 ```{r}
 m4
 ranef(m4)
@@ -274,7 +293,7 @@ The second, more complex example is based on a model in @federer2003proc
 in which orthogonal polynomials are used to model trends along the rows and
 columns of a field experiment.  The data are available in the `agridat`
 package [@wright2014agridat] as the `federer.diagcheck` data frame.
-The help page for the data shows how to reproduce the analysis of
+The help page for that data shows how to reproduce the analysis of
 @federer2003proc.  When using the `lme4` package to reproduce the
 analysis, two different optimizers are available.  Do the two different
 optimizers lead to similar estimated variances?
@@ -282,8 +301,8 @@ optimizers lead to similar estimated variances?
 In the output below, the first column identifies terms in the model, the next
 two columns are the variance and standard deviation from the \texttt{bobyqa}
 optimizer, while the final two columns are from the \texttt{NelderMead}
-optimizer.  These results are from `lme4` version 1.1-7 and are likely to
-be different for later versions of `lme4`
+optimizer.  Note, these results are from `lme4` version 1.1-7 and are likely to
+be different than the results from more recent versions of `lme4`
 
 
 The default output printing is shown first.
@@ -349,7 +368,8 @@ lucid(out, dig=4)
 The formatting of the variance columns is consistent as is the formatting of
 the standard deviation columns.  Fewer digits are shown.  It is easy to
 compare the columns and see that the two optimizers are giving quite different
-answers.
+answers.  Note: The Bobyqa results are almost identical to the results
+obtained when using ASREML or SAS.
 
 Note.  Numeric matrices are printed with quotes.  Use `noquote()` to
 print without quotes, for example:
