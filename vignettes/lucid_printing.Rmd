@@ -27,12 +27,19 @@ opts_chunk$set(fig.align="center", fig.width=6, fig.height=6)
 options(width=90)
 ```
 
-
 ## Abstract
 
-The `lucid` package provides functions for printing vectors and tables of
-floating-point numbers in a human-friendly format.  An application is
-presented for printing of variance components from mixed models.
+@farquhar1891economic provide a humorous quote about tables:
+
+> The graphic method has considerable superiority for the exposition of
+> statistical facts over the tabular. A heavy bank of figures is grievously
+> wearisome to the eye, and the popular mind is as incapable of drawing
+> any useful lessons from it as of extracting sunbeams from cucumbers. 
+
+The `lucid` package intends to make your life easier by helping you extract
+information from tables.  The package has functions for printing vectors and
+tables of floating-point numbers in a human-friendly format.  An application
+is presented for printing of variance components from mixed models.
 
 
 ## Introduction
@@ -71,9 +78,9 @@ or 3 [@feinberg2011extracting] digits for the following reasons:
 2. We almost never care about accuracy of more than three digits.
 3. We can only rarely justify more than three digits of accuracy statistically.
 
-An alternative to significant digits is the concept of _effective digits_ 
-\citep{ehrenberg1977rudiments, kozak2011reporting}, which considers the amount
-of variation in the data.
+An alternative to significant digits is the concept of _effective digits_
+[@ehrenberg1977rudiments, @kozak2011reporting], which considers the amount of
+variation in the data.
 
 In R, using the `round()` and `signif()` functions can be used to round to 3
 digits of accuracy, but those functions can still print results in scientific
@@ -174,6 +181,8 @@ dotplot(bacteria~ -log10(penicillin), anti,
         )
 ```
 
+## Using `lucid` with `broom`
+
 
 ## Application to mixed models
 
@@ -183,10 +192,10 @@ AIC values, or with the help of resiudal plots.  It can also be very
 informative to inspect the estimated values of variance components.
 
 To that end, the generic `VarCorr()` function found in the `nlme`
-\citep{pinheiro2014nlme} and `lme4` \citep{bates2014lme4} packages can be
+@pinheiro2014nlme and `lme4` @bates2014lme4 packages can be
 used to print variance estimates from fitted models.  The `VarCorr()`
 function is not available for models obtained using the `asreml`
-\citep{butler2009asreml} package.
+@butler2009asreml package.
 
 The `lucid` package provides a generic function called `vc()` that
 provides a unified interface for extracting the variance components from
@@ -381,10 +390,10 @@ noquote(lucid(as.matrix(head(mtcars)),2))
 
 Thanks to Deanne Wright for a helpful review of this paper.
 
-## Session information
+## Session info
+
 ```{r session}
 sessionInfo()
 ```
 
 ## References
-

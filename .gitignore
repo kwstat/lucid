@@ -1,13 +1,22 @@
-/README.md~
-/man/vc.Rd~
-/vignettes/lucid.bib~
-/vignettes/lucid_printing.Rnw~
-/vignettes/lucid_printing.blg
-/R/lucid.r~
-/R/vc.r~
-/man/lucid.Rd~
-/vignettes/lucid_printing.bbl
-/vignettes/lucid_printing.log
-/vignettes/lucid_printing.pdf
-/vignettes/lucid_printing.synctex.gz
-/vignettes/lucid_printing.tex
+# Emacs backup files
+*.~*~
+\#*\#
+# Emacs backups of hidden files, like ".gitignore.~3~"
+.*.~*~
+.\#*
+
+# RStudio/R GUI
+.Rbuildignore
+.RData
+.Rhistory
+.Rproj.user
+*.Rproj
+
+# Vignettes
+vignettes/*.bbl
+vignettes/*.log
+vignettes/*.md
+vignettes/*.pdf
+vignettes/*.synctex.gz
+vignettes/*.tex
+
