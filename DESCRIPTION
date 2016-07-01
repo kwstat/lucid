@@ -15,8 +15,9 @@ VignetteBuilder: knitr
 Imports:
     nlme
 Suggests:
-    knitr,
-    lattice,
-    lme4,
-    rjags
+  dplyr,
+  knitr,
+  lattice,
+  lme4,
+  rjags
 RoxygenNote: 5.0.1
