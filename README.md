@@ -1,5 +1,11 @@
+---
+title:lucid
+---
+
 lucid
 =====
+
+![lucid](lucid_logo.png?raw=true)
 
 Lucid printing in R
 
