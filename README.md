@@ -1,7 +1,11 @@
-lucid
+
+![lucid](lucid_logo.png?raw=true)
+
+lucid printing in R
 =====
 
-Lucid printing in R
+
+
 
 'lucid' is primarily a _formatting_ function similar to
 'round' and 'signif', but output is always character.
