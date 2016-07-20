@@ -1,5 +1,5 @@
 # lucid.r
-# Time-stamp: <25 Mar 2015 15:32:23 c:/x/rpack/lucid/R/lucid.r>
+# Time-stamp: <16 Jul 2016 10:42:01 c:/x/rpack/lucid/R/lucid.r>
 
 # lucid is primarily a _formatting_ function similar to
 # 'round' and 'signif', but output is always character.
@@ -15,7 +15,7 @@
 
 #' Lucid printing
 #' 
-#' Format a column of numbers in a way to make it clearer to understand.
+#' Format a column of numbers in a way to make it easy to understand.
 #' 
 #' Output from R is often in scientific notation, which makes it difficult to
 #' quickly glance at numbers and gain an understanding of the relative values.
@@ -88,7 +88,7 @@ lucid.default <- function(x, dig=3, na.value=NULL, ...) {
 lucid.numeric <- function(x, dig=3, na.value=NULL, ...) {
   # This is the main function that formats a vector, but NO PRINTING
 
-  # Use 4 significant digits, drop trailing zero, align decimals
+  # Use 3 significant digits, drop trailing zero, align decimals
   if(class(x)=="numeric" | class(x)=="integer") {
     xx <- format(format(signif(zapsmall(x), dig),
                         scientific=FALSE, drop0trailing=TRUE))
@@ -166,7 +166,6 @@ if(FALSE){
   # To omit quotes from matrix output
   noquote(lucid(lmat, dig=2, na="-"))
   print(lucid(lmat, dig=2, na="-"), quote=FALSE)
-  #prmatrix(lucid(lmat, dig=2, na="-"))
 
   # list
   ll <- list(lvec=lvec, ldf=ldf, lmat=lmat)

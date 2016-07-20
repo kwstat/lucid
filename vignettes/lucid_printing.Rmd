@@ -37,7 +37,7 @@ options(width=90)
 > any useful lessons from it as of extracting sunbeams from cucumbers. 
 
 The `lucid` package intends to make your life easier by helping you extract
-information from tables.  The package has functions for printing vectors and
+information from tables."  The package has functions for printing vectors and",
 tables of floating-point numbers in a human-friendly format.  An application
 is presented for printing of variance components from mixed models.
 
@@ -181,11 +181,12 @@ dotplot(bacteria~ -log10(penicillin), anti,
         )
 ```
 
-## Using `lucid` with `broom`
+## Example: Using `lucid` with `broom`
 
 The `broom` package by @robinson2016broom can be used to collect statistics from fitted models into tidy data frames.  For example, using the `Orange` tree data, it is possible to fit a separate regression line for each tree.  (The straight-line regression here is not entirely sensible, but illustrates a point.)
 ```{r, broom1}
 require(dplyr)
+require(broom)
 Orange %>% group_by(Tree) %>% do(tidy(lm(age ~ circumference, data=.)))
 ```
 Extracting information from the sea of numbers in this view is difficult.  The `lucid` function comes to the resucue, simply by adding one more step to the sequence of pipes.
@@ -194,7 +195,7 @@ Orange %>% group_by(Tree) %>% do(tidy(lm(age ~ circumference, data=.))) %>% luci
 ```
 After formatting, information in the table is almost thrown at the reader, reducing the amount of cognitive effort needed for interpretation.
 
-## Application to mixed models
+## Example: Application to mixed models
 
 During the process of iterative fitting of mixed models, it is often useful to
 compare fits of different models to data, for example using loglikelihood or
@@ -221,7 +222,7 @@ significant digits and `asreml` $Z$ statistics with two significant
 digits.
 
 
-### Example 1 - Rail data
+### vc() example 1 - Rail data
 
 The following simple example illustrates use of the `vc()` function for
 identical REML models in the `nlme`, `lme4`, and `asreml` packages.
@@ -306,7 +307,7 @@ methods for the class.  This was done to allow additional formatting of the
 results.
 
 
-### Example 2 - federer.diagcheck data
+### vc() example 2 - federer.diagcheck data
 
 The second, more complex example is based on a model in @federer2003proc
 in which orthogonal polynomials are used to model trends along the rows and
