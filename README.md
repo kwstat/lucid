@@ -1,5 +1,5 @@
 
-![lucid](lucid_logo.png?raw=true)
+![lucid](figure/lucid_logo.png?raw=true)
 
 lucid printing in R
 =====
