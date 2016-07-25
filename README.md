@@ -16,4 +16,4 @@ Note that R prints character vectors/matrices with quotes,
 but prints data.frames without quotes.
 
 See the vignette here:
-[Luicd printing](https://rawgit.com/kwstat/lucid/master/vignettes/lucid_printing.html)
+[Lucid printing](https://rawgit.com/kwstat/lucid/master/vignettes/lucid_printing.html)
