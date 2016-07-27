@@ -37,7 +37,7 @@ options(width=90)
 > any useful lessons from it as of extracting sunbeams from cucumbers. 
 
 The `lucid` package intends to make your life easier by helping you extract
-information from tables."  The package has functions for printing vectors and",
+information from tables.  The package has functions for printing vectors and
 tables of floating-point numbers in a human-friendly format.  An application
 is presented for printing of variance components from mixed models.
 
@@ -69,20 +69,19 @@ of the numbers.  This not a new phenomenon.  Before R had been created,
 > points on a vertical line, requires extra effort by a programmer but should be
 > almost mandatory for any software that is to be used often.
 
-
 One recommendation for improving the display of tables of numbers
 is to round numbers to 2 [@wainer1997improving]
 or 3 [@feinberg2011extracting] digits for the following reasons:
 
-1. Humans cannot comprehend more than three digits very easily.
-2. We almost never care about accuracy of more than three digits.
-3. We can only rarely justify more than three digits of accuracy statistically.
+1. We cannot *comprehend* more than three digits very easily.
+2. We seldom *care* about accuracy of more than three digits.
+3. We can rarely *justify* more than three digits of accuracy statistically.
 
 An alternative to significant digits is the concept of _effective digits_
 [@ehrenberg1977rudiments, @kozak2011reporting], which considers the amount of
 variation in the data.
 
-In R, using the `round()` and `signif()` functions can be used to round to 3
+In R, the `round()` and `signif()` functions can be used to round to 3
 digits of accuracy, but those functions can still print results in scientific
 notation and leave much to be desired.  The `lucid` package provides functions
 to improve the presentation of floating point numbers in a clear (or lucid)
@@ -90,12 +89,14 @@ way that makes interpretation of the numbers immediately apparent.
 
 Consider the following vector of coefficients from a fitted model:
 ```{r echo=FALSE}
-df1 <- data.frame(effect=c(-13.5, 4.5,  24.5, 6.927792e-14, -1.75,
-                    16.5, 113.5000))
-rownames(df1) <- c("A","B","C","C1","C2","D","(Intercept)")
+df1 <- data.frame(effect=c(113.5, -13.5, 4.5,  24.5, 6.927792e-14, -1.75, 16.5))
+rownames(df1) <- c("(Intercept)","A","B","C","C1","C2","D")
 print(df1)
 ```
-Which coeficient is zero?  How large is the intercept?
+Questions of interest about the coefficients might include:
+
+1. Which coeficient is zero?
+2. How large is the intercept?
 
 Both questions can be answered using the output shown above, but it
 takes too much effort to answer the questions.  Now examine the same
@@ -153,7 +154,7 @@ similar manner, the `lucid()` output is a semi-graphical view of the data.
 The figure below shows a dotplot of the penicillin values on a reverse log10
 scale.  The values are also shown along the right axis in `lucid()` format.
 Note the similarity in the overall shape of the dots and the positions of the
-left-most significant digit in the numerical value.
+left-most significant digit in the numerical values along the right axis.
 ```{r dotplot, echo=FALSE, message=FALSE, fig.height=4, fig.width=6}
 require(lattice)
 anti=antibiotic # make a copy of the data to reverse the levels
@@ -187,13 +188,13 @@ The `broom` package by @robinson2016broom can be used to collect statistics from
 ```{r, broom1}
 require(dplyr)
 require(broom)
-Orange %>% group_by(Tree) %>% do(tidy(lm(age ~ circumference, data=.)))
+Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.)))
 ```
-Extracting information from the sea of numbers in this view is difficult.  The `lucid` function comes to the resucue, simply by adding one more step to the sequence of pipes.
+Extracting information from the sea of numbers above is difficult.  The `lucid` function comes to the resucue, simply by adding one more step to the sequence of pipes.
 ```{r, broom2}
-Orange %>% group_by(Tree) %>% do(tidy(lm(age ~ circumference, data=.))) %>% lucid
+Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~  age, data=.))) %>% lucid
 ```
-After formatting, information in the table is almost thrown at the reader, reducing the amount of cognitive effort needed for interpretation.
+After formatting, information in the table almost jumps out at the reader, reducing the amount of cognitive effort needed for interpretation.
 
 ## Example: Application to mixed models
 
@@ -215,7 +216,7 @@ packages.  The `vc()` function has methods specific to each package that
 make it easy to extract the estimated variances and correlations from fitted
 models and formats the results using the `lucid()` function.
 
-[@pearce1988manual] suggest showing four significant digits for the error
+@pearce1988manual suggest showing four significant digits for the error
 mean square and two decimal places digits for $F$ values.  The `lucid()`
 function uses a similar philosophy, presenting the variances with four
 significant digits and `asreml` $Z$ statistics with two significant
@@ -307,7 +308,7 @@ methods for the class.  This was done to allow additional formatting of the
 results.
 
 
-### vc() example 2 - federer.diagcheck data
+### vc() example 2 - Analysis of federer.diagcheck data
 
 The second, more complex example is based on a model in @federer2003proc
 in which orthogonal polynomials are used to model trends along the rows and
@@ -319,11 +320,10 @@ analysis, two different optimizers are available.  Do the two different
 optimizers lead to similar estimated variances?
 
 In the output below, the first column identifies terms in the model, the next
-two columns are the variance and standard deviation from the \texttt{bobyqa}
-optimizer, while the final two columns are from the \texttt{NelderMead}
+two columns are the variance and standard deviation from the 'bobyqa'
+optimizer, while the final two columns are from the 'NelderMead'
 optimizer.  Note, these results are from `lme4` version 1.1-7 and are likely to
-be different than the results from more recent versions of `lme4`
-
+be different than the results from more recent versions of `lme4`.
 
 The default output printing is shown first.
 
@@ -391,8 +391,7 @@ compare the columns and see that the two optimizers are giving quite different
 answers.  Note: The Bobyqa results are almost identical to the results
 obtained when using ASREML or SAS.
 
-Note.  Numeric matrices are printed with quotes.  Use `noquote()` to
-print without quotes, for example:
+Note: Data frames have no quotes, but numeric matrices are printed with quotes.  Use `noquote()` to print without quotes, for example:
 ```{r }
 noquote(lucid(as.matrix(head(mtcars)),2))
 ``` 

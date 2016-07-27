@@ -15,6 +15,7 @@ VignetteBuilder: knitr
 Imports:
     nlme
 Suggests:
+  broom,
   dplyr,
   knitr,
   lattice,

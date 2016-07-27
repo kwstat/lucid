@@ -36,7 +36,7 @@ Text, formatted in a human-readable way.  Standard R methods are
 used to print the value.
 }
 \description{
-Format a column of numbers in a way to make it clearer to understand.
+Format a column of numbers in a way to make it easy to understand.
 }
 \details{
 Output from R is often in scientific notation, which makes it difficult to
