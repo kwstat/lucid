@@ -1,15 +1,14 @@
 ---
 title: "Lucid printing of floating-point vectors"
 author: "Kevin Wright"
-date: "`r Sys.Date()`"
+date: '`r Sys.Date()`'
 output:
+  word_document: default
   html_document:
     highlight: tango
 bibliography: lucid.bib
-vignette: >
-  % \VignetteIndexEntry{Lucid printing of floating-point vectors}
-  % \VignetteEncoding{UTF-8}
-  % \VignetteEngine{knitr::rmarkdown}
+vignette: |
+  % \VignetteIndexEntry{Lucid printing of floating-point vectors} % \VignetteEncoding{UTF-8} % \VignetteEngine{knitr::rmarkdown}
 ---
 <style type="text/css">
 body, td { font-size: 14pt; color: #000; padding:1em; }
@@ -23,7 +22,7 @@ pre > code { border: 0; }
 
 ```{r setup, results="hide"}
 library("knitr")
-opts_chunk$set(fig.align="center", fig.width=6, fig.height=6)
+    opts_chunk$set(fig.align="center", fig.width=6, fig.height=6)
 options(width=90)
 ```
 
@@ -95,7 +94,7 @@ print(df1)
 ```
 Questions of interest about the coefficients might include:
 
-1. Which coeficient is zero?
+1. Which coefficient is zero?
 2. How large is the intercept?
 
 Both questions can be answered using the output shown above, but it
@@ -106,7 +105,7 @@ require("lucid")
 options(digits=7) # knitr defaults to 4, R console uses 7
 lucid(df1)
 ```
-Which coeficient is zero?  How large is the intercept?
+Which coefficient is zero?  How large is the intercept?
 
 Printing the numbers with the `lucid()` function has made the
 questions much easier to answer.
@@ -164,10 +163,11 @@ cust <- myyscale.component <- function(...) {  #Custom y-scale function componen
   ans <- yscale.components.default(...)
   ans$right <- ans$left
   foo <- ans$right$labels$at
-  ans$right$labels$labels <- rev(c(" 870    ","   1    ","   0.001","   0.005"," 100    ",
-                                   " 850    "," 800    ","   3    "," 850    ","   1    ",
-                                   "  10    ","   0.007","   0.03 ","   1    ",
-                                   "   0.001","   0.005"))
+  ans$right$labels$labels <-
+    rev(c(" 870    ","   1    ","   0.001","   0.005"," 100    ",
+          " 850    "," 800    ","   3    "," 850    ","   1    ",
+          "  10    ","   0.007","   0.03 ","   1    ",
+          "   0.001","   0.005"))
   return(ans)
 }
 
@@ -190,7 +190,7 @@ require(dplyr)
 require(broom)
 Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.)))
 ```
-Extracting information from the sea of numbers above is difficult.  The `lucid` function comes to the resucue, simply by adding one more step to the sequence of pipes.
+Extracting information from the sea of numbers above is difficult.  The `lucid` function comes to the rescue, simply by adding one more step to the sequence of pipes.
 ```{r, broom2}
 Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~  age, data=.))) %>% lucid
 ```
@@ -200,7 +200,7 @@ After formatting, information in the table almost jumps out at the reader, reduc
 
 During the process of iterative fitting of mixed models, it is often useful to
 compare fits of different models to data, for example using loglikelihood or
-AIC values, or with the help of resiudal plots.  It can also be very
+AIC values, or with the help of residual plots.  It can also be very
 informative to inspect the estimated values of variance components.
 
 To that end, the generic `VarCorr()` function found in the `nlme`
