@@ -1,4 +1,4 @@
-# lucid ![lucid](figure/lucid_logo.png?raw=true)
+# lucid <img src="figure/lucid_logo.png" align="right" />
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/lucid)](https://cran.r-project.org/package=lucid)
 
