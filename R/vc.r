@@ -1,5 +1,5 @@
 # vc.r
-# Time-stamp: <01 Sep 2015 17:18:03 c:/x/rpack/lucid/R/vc.r>
+# Time-stamp: <24 Oct 2016 13:13:14 c:/x/rpack/lucid/R/vc.r>
 
 # The 'vc' function extracts the variance components from
 # a fitted model.
@@ -107,11 +107,14 @@ print.vc.asreml  <- function(x, dig=4, ...){
   cn[cn=="constraint"] <- "constr"
   colnames(x) <- cn
 
-  # Shorten constraint to 3-letter code
-  levels(x$constr)[levels(x$constr)=="Fixed"] <- "fix"
-  levels(x$constr)[levels(x$constr)=="Boundary"] <- "bnd "
-  levels(x$constr)[levels(x$constr)=="Positive"] <- "pos"
-  levels(x$constr)[levels(x$constr)=="Unconstrained"] <- "unc"
+  # asreml 3 only
+  if(is.element("constr", names(x))) {
+    # Shorten constraint to 3-letter code
+    levels(x$constr)[levels(x$constr)=="Fixed"] <- "F"
+    levels(x$constr)[levels(x$constr)=="Boundary"] <- "B"
+    levels(x$constr)[levels(x$constr)=="Positive"] <- "P"
+    levels(x$constr)[levels(x$constr)=="Unconstrained"] <- "U"
+  }
 
   print(x, row.names=FALSE) # Do not print row numbers
   invisible(x)
@@ -227,6 +230,8 @@ print.vc.mcmc.list <- function(x, dig=4, ...){
 
 if(FALSE) {
 
+  # see tests folder
+  
   require("nlme")
   #data(Rail)
   m1n <- lme(travel~1, random=~1|Rail, data=Rail)

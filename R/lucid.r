@@ -1,5 +1,5 @@
 # lucid.r
-# Time-stamp: <02 Sep 2016 09:04:32 c:/x/rpack/lucid/R/lucid.r>
+# Time-stamp: <24 Oct 2016 09:32:23 c:/x/rpack/lucid/R/lucid.r>
 
 # lucid is primarily a _formatting_ function similar to
 # 'round' and 'signif', but output is always character.

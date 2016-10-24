@@ -1,13 +1,11 @@
 
-# lucid 1.4 - unpublished
+# lucid 1.4 - Oct 2016
 
-* Change vignette from Rnw/pdf to Rmd/html.
-
+* Added lucid logo, JSM poster & paper to github.
+* Added first unit tests.
+* Change vignette from Rnw to Rmd.
 * Change NEWS to NEWS.md.
-
-* Now using Roxygen2 documentation.
-
-* Fixed bug: `vc()` now uses `invisible(x)` instead of `return()`.
+* Now using roxygen2 documentation.
 
 # lucid 1.3 - Jun 2015
 

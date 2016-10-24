@@ -1,7 +1,7 @@
 Package: lucid
 Version: 1.4
 Authors@R: person("Kevin","Wright", email="kw.stat@gmail.com", role=c("aut","cre"))
-Date: 2015-07-02
+Date: 2016-10-24
 Title: Printing Floating Point Numbers in a Human-Friendly Format
 Description: Print vectors (and data frames) of floating point numbers
     using a non-scientific format optimized for human readers.  Vectors
@@ -20,5 +20,6 @@ Suggests:
   knitr,
   lattice,
   lme4,
-  rjags
+  rjags,
+  testthat
 RoxygenNote: 5.0.1
