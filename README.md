@@ -2,6 +2,8 @@
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/lucid)](https://cran.r-project.org/package=lucid)
 
+[![Research software impact](http://depsy.org/api/package/cran/lucid/badge.svg)](http://depsy.org/package/r/lucid)
+
 The 'lucid' package provides a simple function to improve the format of floating-point numbers for humans.
 The 'lucid()' function is primarily a _formatting_ function similar to 'round' and 'signif', but output is always character.
 
@@ -22,12 +24,12 @@ install.packages("devtools")
 devtools::install_github("kwstat/lucid")
 ```
 
-# Example
+## Example
 
 A full vignette can be found here:
-[Lucid printing](https://rawgit.com/kwstat/lucid/master/vignettes/lucid_printing.html)
+[Lucid printing of floating-point vectors](https://rawgit.com/kwstat/lucid/master/vignettes/lucid_printing.html)
 
-In the short example below, a separate regression line is fit to each of five trees' circumference versus age.  The default output is difficult to interpret quickly.  The `lucid` function makes the results much cleaner.
+In the short example below, a separate regression line is fit to each of five trees' circumference versus age.  The default output is difficult to interpret quickly.  The `lucid` function makes the results much cleaner by reducing visual clutter and aligning decimals.
 
 ```R
 require(lucid)
@@ -35,7 +37,6 @@ require(dplyr)
 require(broom)
 
 # Fit a separate regression line to each tree.
-
 Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.)))
 
 Source: local data frame [10 x 6]
@@ -54,8 +55,7 @@ Groups: Tree [5]
 9      4 (Intercept) 14.63762022 11.233762751  1.303002 2.493507e-01
 10     4         age  0.13517222  0.010782940 12.535748 5.733090e-05
 
-# Now extend the pipe to 'lucid'
-
+# Now extend the pipe to include 'lucid'
 Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.))) %>% lucid
 
 Source: local data frame [10 x 6]
