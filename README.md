@@ -1,7 +1,6 @@
 # lucid <img src="figure/lucid_logo.png" align="right" />
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/lucid)](https://cran.r-project.org/package=lucid)
-
 [![Research software impact](http://depsy.org/api/package/cran/lucid/badge.svg)](http://depsy.org/package/r/lucid)
 
 The 'lucid' package provides a simple function to improve the format of floating-point numbers for humans.
@@ -24,9 +23,9 @@ install.packages("devtools")
 devtools::install_github("kwstat/lucid")
 ```
 
-## Example
+## Usage
 
-A full vignette can be found here:
+Vignette: 
 [Lucid printing of floating-point vectors](https://rawgit.com/kwstat/lucid/master/vignettes/lucid_printing.html)
 
 In the short example below, a separate regression line is fit to each of five trees' circumference versus age.  The default output is difficult to interpret quickly.  The `lucid` function makes the results much cleaner by reducing visual clutter and aligning decimals.
