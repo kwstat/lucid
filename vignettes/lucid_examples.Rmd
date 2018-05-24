@@ -3,6 +3,7 @@ title: "Lucid printing of floating-point vectors"
 author: "Kevin Wright"
 date: "`r Sys.Date()`"
 output:
+  rmarkdown::html_vignette: default
   html_document:
     highlight: tango
 bibliography: lucid.bib
@@ -69,9 +70,10 @@ of the numbers.  This not a new phenomenon.  Before R had been created,
 > points on a vertical line, requires extra effort by a programmer but should be
 > almost mandatory for any software that is to be used often.
 
-One recommendation for improving the display of tables of numbers
-is to round numbers to 2 [@wainer1997improving]
-or 3 [@feinberg2011extracting] digits for the following reasons:
+One recommendation for improving the display of tables of numbers is to round
+numbers to 2 [@wainer1997improving] or 3
+[@feinberg2011extracting, @clark1965presentation] digits for the following
+reasons:
 
 1. We cannot *comprehend* more than three digits very easily.
 2. We seldom *care* about accuracy of more than three digits.

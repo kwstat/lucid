@@ -76,4 +76,3 @@ Wainer, H. (2014). Medical Illuminations: Using Evidence, Visualization and
 Statistical Thinking to Improve Healthcare.
 }
 \keyword{datasets}
-

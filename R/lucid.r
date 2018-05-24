@@ -1,5 +1,5 @@
 # lucid.r
-# Time-stamp: <24 Oct 2016 09:32:23 c:/x/rpack/lucid/R/lucid.r>
+# Time-stamp: <07 Aug 2017 16:16:05 c:/x/rpack/lucid/R/lucid.R>
 
 # lucid is primarily a _formatting_ function similar to
 # 'round' and 'signif', but output is always character.
@@ -29,10 +29,14 @@
 #' (4) align decimals.
 #' 
 #' @param x Object to format.
+#' 
 #' @param dig Number of significant digits to use in printing.
+#' 
 #' @param na.value Character string to use instead of 'NA' for numeric missing
 #' values. Default is NULL, which does nothing.
+#' 
 #' @param ... Additional arguments passed to the data.frame method.
+#' 
 #' @return Text, formatted in a human-readable way.  Standard R methods are
 #' used to print the value.
 #' @seealso \code{\link{signif}}
@@ -126,6 +130,16 @@ lucid.list <- function(x, dig=3, na.value=NULL, ...){
   #    cat(names(x)[ii], ":\n")
   #    lucid(x[[ii]], dig=dig, na.value=na.value)
   #  }
+  x[] <- lapply(x, lucid, dig, na.value)
+  x
+}
+
+#' @rdname lucid
+#' @export
+lucid.tbl_df <- function(x, dig=3, na.value=NULL, ...){
+  # tibble tries to control formatting, which clashes with lucid,
+  # so strip the tibble classes.
+  class(x) <- "data.frame"
   x[] <- lapply(x, lucid, dig, na.value)
   x
 }

@@ -1,17 +1,17 @@
 
 # lucid 1.5 - unpublished
 
+`lucid(x)` now converts tibbles to data.frames before formatting.
+
 # lucid 1.4 - Oct 2016
 
 Added lucid logo, JSM poster & paper to github.
 
-Added first unit tests.
+Changed vignette from Rnw to Rmd.
 
-Change vignette from Rnw to Rmd.
+Switched to `roxygen2` documentation.
 
-Change NEWS to NEWS.md.
-
-Now using roxygen2 documentation.
+Now using `testthat` and `covr` packages.
 
 # lucid 1.3 - Jun 2015
 
