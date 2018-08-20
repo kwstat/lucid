@@ -7,6 +7,8 @@
 The 'lucid' package provides a simple function to improve the format of floating-point numbers for humans.
 The 'lucid()' function is primarily a _formatting_ function similar to 'round' and 'signif', but output is always character.
 
+Note: The `lucid` package was created before the `tibble` package. The `tibble` package now uses a similar style of formatting dataframes. 
+
 Key features:
 
 * Simple to use.
@@ -37,8 +39,9 @@ require(lucid)
 require(dplyr)
 require(broom)
 
-# Fit a separate regression line to each tree.
-Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.)))
+# Fit a separate regression line to each tree. 
+# Use `as.data.frame` to remove formatting done by `tibble`.
+Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.))) %>% as.data.frame
 
 Source: local data frame [10 x 6]
 Groups: Tree [5]
@@ -57,7 +60,10 @@ Groups: Tree [5]
 10     4         age  0.13517222  0.010782940 12.535748 5.733090e-05
 
 # Now extend the pipe to include 'lucid'
+Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.))) %>% as.data.frame %>% lucid
 Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.))) %>% lucid
+# By default, `tibble` now uses identical formatting to `lucid`
+# Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.)))
 
 Source: local data frame [10 x 6]
 Groups: Tree [5]
