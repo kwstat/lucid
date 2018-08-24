@@ -399,14 +399,5 @@ Note: Data frames have no quotes, but numeric matrices are printed with quotes. 
 noquote(lucid(as.matrix(head(mtcars)),2))
 ``` 
 
-## Acknowledgements
-
-Thanks to Deanne Wright for a helpful review of this paper.
-
-## Session info
-
-```{r session}
-sessionInfo()
-```
 
 ## References

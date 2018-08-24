@@ -4,7 +4,7 @@
 #' Effectiveness of 3 antibiotics against 16 bacterial species.
 #' 
 #' The values reported are the minimum inhibitory concentration (MIC) in
-#' microgrms/milliliter, which represents the concentration of antibiotic
+#' micrograms/milliliter, which represents the concentration of antibiotic
 #' required to prevent growth in vitro.
 #' 
 #' @name antibiotic
@@ -22,11 +22,11 @@
 #' 
 #' Wainer, H. (2009). A Centenary Celebration for Will Burtin: A Pioneer of
 #' Scientific Visualization.  \emph{Chance}, 22(1), 51-55.
-#' \url{http://chance.amstat.org/2009/02/visrev221/}
+#' https://chance.amstat.org/2009/02/visrev221/
 #' 
 #' Wainer, H. (2009). Visual Revelations: Pictures at an Exhibition.
 #' \emph{Chance}, 22(2), 46--54.
-#' \url{http://chance.amstat.org/2009/04/visrev222/}
+#' https://chance.amstat.org/2009/04/visrev222/
 #' 
 #' Wainer, H. (2014). Medical Illuminations: Using Evidence, Visualization and
 #' Statistical Thinking to Improve Healthcare.

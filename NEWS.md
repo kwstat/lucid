@@ -1,7 +1,7 @@
 
-# lucid 1.5 - unpublished
+# lucid 1.5 - Aug 2018
 
-`lucid(x)` now converts tibbles to data.frames before formatting.
+`lucid()` now converts tibbles to data.frames before formatting.
 
 # lucid 1.4 - Oct 2016
 

@@ -4,8 +4,7 @@
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/lucid)](https://cranlogs.r-pkg.org/badges/lucid)
 
 
-The 'lucid' package provides a simple function to improve the format of floating-point numbers for humans.
-The 'lucid()' function is primarily a _formatting_ function similar to 'round' and 'signif', but output is always character.
+The 'lucid' package provides a simple function to improve the format of floating-point numbers for humans. The 'lucid()' function is primarily a _formatting_ function similar to 'round' and 'signif', but output is always character.
 
 Note: The `lucid` package was created before the `tibble` package. The `tibble` package now uses a similar style of formatting dataframes. 
 
@@ -34,7 +33,7 @@ devtools::install_github("kwstat/lucid")
 
 In the short example below, a separate regression line is fit to each of five trees' circumference versus age.  The default output is difficult to interpret quickly.  The `lucid` function makes the results much cleaner by reducing visual clutter and aligning decimals.
 
-```R
+```
 require(lucid)
 require(dplyr)
 require(broom)
@@ -61,8 +60,8 @@ Groups: Tree [5]
 
 # Now extend the pipe to include 'lucid'
 Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.))) %>% as.data.frame %>% lucid
-Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.))) %>% lucid
-# By default, `tibble` now uses identical formatting to `lucid`
+
+# Note: `tibble` now uses formatting almost identical to `lucid`
 # Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.)))
 
 Source: local data frame [10 x 6]
@@ -71,7 +70,7 @@ Groups: Tree [5]
     Tree        term estimate std.error statistic   p.value
    <ord>       <chr>    <chr>     <chr>     <chr>     <chr>
 1      3 (Intercept)  19.2      5.86         3.28 0.0221   
-2      3         age   0.0811   0.00563     14.4  0.000029 
+2      3         age   0.0811   0.00563     14.4  0.0000290 
 3      1 (Intercept)  24.4      6.54         3.73 0.0135   
 4      1         age   0.0815   0.00628     13    0.0000485
 5      5 (Intercept)   8.76     8.18         1.07 0.333    

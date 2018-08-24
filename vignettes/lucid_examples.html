@@ -12,7 +12,7 @@
 
 <meta name="author" content="Kevin Wright" />
 
-<meta name="date" content="2018-05-24" />
+<meta name="date" content="2018-08-23" />
 
 <title>Lucid printing of floating-point vectors</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Lucid printing of floating-point vectors</h1>
 <h4 class="author"><em>Kevin Wright</em></h4>
-<h4 class="date"><em>2018-05-24</em></h4>
+<h4 class="date"><em>2018-08-23</em></h4>
 
 
 
@@ -225,20 +225,17 @@ pre > code { border: 0; }
 ## 10 4     age           0.135    0.0108      12.5  0.0000573</code></pre>
 <p>Extracting information from the sea of numbers above is difficult. The <code>lucid</code> function comes to the rescue, simply by adding one more step to the sequence of pipes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Orange <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Tree) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">do</span>(<span class="kw">tidy</span>(<span class="kw">lm</span>(circumference <span class="op">~</span><span class="st">  </span>age, <span class="dt">data=</span>.))) <span class="op">%&gt;%</span><span class="st"> </span>lucid</code></pre></div>
-<pre><code>## # A tibble: 10 x 6
-## # Groups:   Tree [5]
-##    Tree  term        estimate  std.error  statistic p.value    
-##    &lt;ord&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      
-##  1 3     (Intercept) &quot;19.2   &quot; &quot; 5.86   &quot; &quot; 3.28&quot;   &quot;0.0221   &quot;
-##  2 3     age         &quot; 0.0811&quot; &quot; 0.00563&quot; &quot;14.4 &quot;   &quot;0.000029 &quot;
-##  3 1     (Intercept) &quot;24.4   &quot; &quot; 6.54   &quot; &quot; 3.73&quot;   &quot;0.0135   &quot;
-##  4 1     age         &quot; 0.0815&quot; &quot; 0.00628&quot; &quot;13   &quot;   0.0000485  
-##  5 5     (Intercept) &quot; 8.76  &quot; &quot; 8.18   &quot; &quot; 1.07&quot;   &quot;0.333    &quot;
-##  6 5     age         &quot; 0.111 &quot; &quot; 0.00785&quot; &quot;14.1 &quot;   0.0000318  
-##  7 2     (Intercept) &quot;20     &quot; &quot; 9.35   &quot; &quot; 2.13&quot;   &quot;0.0859   &quot;
-##  8 2     age         &quot; 0.125 &quot; &quot; 0.00898&quot; &quot;13.9 &quot;   0.0000343  
-##  9 4     (Intercept) &quot;14.6   &quot; &quot;11.2    &quot; &quot; 1.3 &quot;   &quot;0.249    &quot;
-## 10 4     age         &quot; 0.135 &quot; &quot; 0.0108 &quot; &quot;12.5 &quot;   0.0000573</code></pre>
+<pre><code>##    Tree        term estimate std.error statistic   p.value
+## 1     3 (Intercept)  19.2      5.86         3.28 0.0221   
+## 2     3         age   0.0811   0.00563     14.4  0.000029 
+## 3     1 (Intercept)  24.4      6.54         3.73 0.0135   
+## 4     1         age   0.0815   0.00628     13    0.0000485
+## 5     5 (Intercept)   8.76     8.18         1.07 0.333    
+## 6     5         age   0.111    0.00785     14.1  0.0000318
+## 7     2 (Intercept)  20        9.35         2.13 0.0859   
+## 8     2         age   0.125    0.00898     13.9  0.0000343
+## 9     4 (Intercept)  14.6     11.2          1.3  0.249    
+## 10    4         age   0.135    0.0108      12.5  0.0000573</code></pre>
 <p>After formatting, information in the table almost jumps out at the reader, reducing the amount of cognitive effort needed for interpretation.</p>
 </div>
 <div id="example-application-to-mixed-models" class="section level2">
@@ -322,15 +319,15 @@ c5 &lt;-<span class="st"> </span><span class="kw">coda.samples</span>(j5, <span 
                    <span class="dt">n.iter=</span><span class="dv">100000</span>, <span class="dt">thin=</span><span class="dv">5</span>, <span class="dt">progress.bar=</span><span class="st">&quot;none&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vc</span>(c5)</code></pre></div>
 <pre><code>##               Mean     SD    2.5%  Median   97.5%
-## mu          66.6   9.52    47.17   66.6    85.28 
-## residual     3.943 0.8123   2.732   3.816   5.884
-## sigma.rail  23.31  7.429   13.53   21.78   41.83 
-## theta[1]   -34.49  9.689  -53.68  -34.53  -14.95 
-## theta[2]   -16.41  9.72   -35.65  -16.4     3.188
-## theta[3]   -12.43  9.708  -31.58  -12.43    7.245
-## theta[4]    15.88  9.705   -3.199  15.8    35.65 
-## theta[5]    17.82  9.714   -1.381  17.77   37.63 
-## theta[6]    29.04  9.68     9.973  29.01   48.75</code></pre>
+## mu          66.4   9.698   47.11   66.25   86.03 
+## residual     3.945 0.8132   2.729   3.818   5.886
+## sigma.rail  23.36  7.423   13.66   21.87   41.9  
+## theta[1]   -34.3   9.903  -54.53  -34.15  -14.8  
+## theta[2]   -16.19  9.887  -36.19  -16.06    3.332
+## theta[3]   -12.24  9.86   -32.19  -12.1     7.182
+## theta[4]    16.05  9.885   -3.863  16.17   35.77 
+## theta[5]    18.05  9.863   -1.799  18.11   37.85 
+## theta[6]    29.24  9.877    9.352  29.29   48.97</code></pre>
 <p>Compare the JAGS point estimates and quantiles (above) with the results from <code>lme4</code> below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m4</code></pre></div>
 <pre><code>## Linear mixed model fit by REML ['lmerMod']
@@ -408,42 +405,6 @@ c5 &lt;-<span class="st"> </span><span class="kw">coda.samples</span>(j5, <span 
 ## Hornet 4 Drive    21  6   260  110 3.1  3.2 19   1  0  3    1   
 ## Hornet Sportabout 19  8   360  180 3.2  3.4 17   0  0  3    2   
 ## Valiant           18  6   220  100 2.8  3.5 20   1  0  3    1</code></pre>
-</div>
-<div id="acknowledgements" class="section level2">
-<h2>Acknowledgements</h2>
-<p>Thanks to Deanne Wright for a helpful review of this paper.</p>
-</div>
-<div id="session-info" class="section level2">
-<h2>Session info</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.5.0 (2018-04-23)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 7 x64 (build 7601) Service Pack 1
-## 
-## Matrix products: default
-## 
-## locale:
-## [1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United States.1252   
-## [3] LC_MONETARY=English_United States.1252 LC_NUMERIC=C                          
-## [5] LC_TIME=English_United States.1252    
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-##  [1] rjags_4-6       coda_0.19-1     lme4_1.1-17     Matrix_1.2-14   nlme_3.1-137   
-##  [6] broom_0.4.4     dplyr_0.7.4     lattice_0.20-35 lucid_1.4       knitr_1.20     
-## [11] httr_1.3.1      devtools_1.13.5
-## 
-## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.16     nloptr_1.0.4     compiler_3.5.0   pillar_1.2.1     plyr_1.8.4      
-##  [6] bindr_0.1.1      tools_3.5.0      digest_0.6.15    evaluate_0.10.1  memoise_1.1.0   
-## [11] tibble_1.4.2     pkgconfig_2.0.1  rlang_0.2.0      psych_1.8.3.3    cli_1.0.0       
-## [16] yaml_2.1.18      parallel_3.5.0   bindrcpp_0.2.2   withr_2.1.2      stringr_1.3.0   
-## [21] rprojroot_1.3-2  grid_3.5.0       glue_1.2.0       R6_2.2.2         foreign_0.8-70  
-## [26] rmarkdown_1.9    minqa_1.2.4      tidyr_0.8.0      purrr_0.2.4      reshape2_1.4.3  
-## [31] magrittr_1.5     MASS_7.3-49      splines_3.5.0    backports_1.1.2  htmltools_0.3.6 
-## [36] assertthat_0.2.0 mnormt_1.5-5     utf8_1.1.3       stringi_1.1.7    crayon_1.3.4</code></pre>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2>References</h2>
