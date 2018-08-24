@@ -45,10 +45,7 @@ is presented for printing of variance components from mixed models.
 
 ## Introduction
 
-Numerical output from R is often in scientific notation, which can make it
-difficult to quickly glance at numbers and understand the relative sizes
-of the numbers.  This not a new phenomenon.  Before R had been created,
-@finney1988data had this to say about numerical output:
+Numerical output from R is often in scientific notation, which can make it difficult to quickly glance at numbers and understand the relative sizes of the numbers.  This not a new phenomenon.  Before R had been created, @finney1988data had this to say about numerical output:
 
 > Certainly, in initiating analyses by standard software or in writing one's
 > own software, the aim should be to have output that is easy to read and easily
@@ -138,25 +135,16 @@ called `antibiotic`.  The default view of this data is:
 ```{r}
 print(antibiotic)
 ```
-Due to the wide range in magnitude of the values, nearly half of the
-floating-point numbers in the default view contain trailing zeros
-after the decimal, which adds significant clutter and impedes
-interpretation.  The `lucid()` display of the data is:
+Due to the wide range in magnitude of the values, nearly half of the floating-point numbers in the default view contain trailing zeros after the decimal, which adds significant clutter and impedes interpretation.  The `lucid()` display of the data is:
+
 ```{r}
 lucid(antibiotic)
 ```
-The `lucid()` display is dramatically simplified, providing a
-clear picture of the effectiveness of the antibiotics against
-bacteria.  This view of the data matches exactly the appearance of
-Table 1 in @wainer2009pictures.
 
-A stem-and-leaf plot is a semi-graphical display of data, in that the
-_positions_ of the numbers create a display similar to a histogram.  In a
-similar manner, the `lucid()` output is a semi-graphical view of the data.
-The figure below shows a dotplot of the penicillin values on a reverse log10
-scale.  The values are also shown along the right axis in `lucid()` format.
-Note the similarity in the overall shape of the dots and the positions of the
-left-most significant digit in the numerical values along the right axis.
+The `lucid()` display is dramatically simplified, providing a clear picture of the effectiveness of the antibiotics against bacteria.  This view of the data matches exactly the appearance of Table 1 in @wainer2009pictures.
+
+A stem-and-leaf plot is a semi-graphical display of data, in that the _positions_ of the numbers create a display similar to a histogram.  In a similar manner, the `lucid()` output is a semi-graphical view of the data. The figure below shows a dotplot of the penicillin values on a reverse log10 scale.  The values are also shown along the right axis in `lucid()` format. Note the similarity in the overall shape of the dots and the positions of the left-most significant digit in the numerical values along the right axis.
+
 ```{r dotplot, echo=FALSE, message=FALSE, fig.height=4, fig.width=6}
 require(lattice)
 anti=antibiotic # make a copy of the data to reverse the levels
@@ -194,6 +182,7 @@ require(broom)
 Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.)))
 ```
 Extracting information from the sea of numbers above is difficult.  The `lucid` function comes to the rescue, simply by adding one more step to the sequence of pipes.
+
 ```{r, broom2}
 Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~  age, data=.))) %>% lucid
 ```
@@ -201,39 +190,21 @@ After formatting, information in the table almost jumps out at the reader, reduc
 
 ## Example: Application to mixed models
 
-During the process of iterative fitting of mixed models, it is often useful to
-compare fits of different models to data, for example using loglikelihood or
-AIC values, or with the help of residual plots.  It can also be very
-informative to inspect the estimated values of variance components.
+During the process of iterative fitting of mixed models, it is often useful to compare fits of different models to data, for example using loglikelihood or AIC values, or with the help of residual plots.  It can also be very informative to inspect the estimated values of variance components.
 
-To that end, the generic `VarCorr()` function found in the `nlme`
-@pinheiro2014nlme and `lme4` @bates2014lme4 packages can be
-used to print variance estimates from fitted models.  The `VarCorr()`
-function is not available for models obtained using the `asreml`
+To that end, the generic `VarCorr()` function found in the `nlme` @pinheiro2014nlme and `lme4` @bates2014lme4 packages can be used to print variance estimates from fitted models.  The `VarCorr()` function is not available for models obtained using the `asreml`
 @butler2009asreml package.
 
 The `lucid` package provides a generic function called `vc()` that
-provides a unified interface for extracting the variance components from
-fitted models obtained from the `asreml`, `lme4`, `nlme`, and `rjags` 
-packages.  The `vc()` function has methods specific to each package that
-make it easy to extract the estimated variances and correlations from fitted
-models and formats the results using the `lucid()` function.
+provides a unified interface for extracting the variance components from fitted models obtained from the `asreml`, `lme4`, `nlme`, and `rjags` packages.  The `vc()` function has methods specific to each package that make it easy to extract the estimated variances and correlations from fitted models and formats the results using the `lucid()` function.
 
-@pearce1988manual suggest showing four significant digits for the error
-mean square and two decimal places digits for $F$ values.  The `lucid()`
-function uses a similar philosophy, presenting the variances with four
-significant digits and `asreml` $Z$ statistics with two significant
+@pearce1988manual suggest showing four significant digits for the error mean square and two decimal places digits for $F$ values.  The `lucid()` function uses a similar philosophy, presenting the variances with four significant digits and `asreml` $Z$ statistics with two significant
 digits.
 
 
 ### vc() example 1 - Rail data
 
-The following simple example illustrates use of the `vc()` function for
-identical REML models in the `nlme`, `lme4`, and `asreml` packages.
-The travel times of ultrasonic waves in six steel rails was modeled as an
-overall mean, a random effect for each rail, and a random residual.
-The package `rjags` is used to fit a similar Bayesian model inspired by
-@wilkinson2014oneway.
+The following simple example illustrates use of the `vc()` function for identical REML models in the `nlme`, `lme4`, and `asreml` packages. The travel times of ultrasonic waves in six steel rails was modeled as an overall mean, a random effect for each rail, and a random residual. The package `rjags` is used to fit a similar Bayesian model inspired by @wilkinson2014oneway.
 
 ## nlme
 
@@ -313,20 +284,9 @@ results.
 
 ### vc() example 2 - Analysis of federer.diagcheck data
 
-The second, more complex example is based on a model in @federer2003proc
-in which orthogonal polynomials are used to model trends along the rows and
-columns of a field experiment.  The data are available in the `agridat`
-package [@wright2014agridat] as the `federer.diagcheck` data frame.
-The help page for that data shows how to reproduce the analysis of
-@federer2003proc.  When using the `lme4` package to reproduce the
-analysis, two different optimizers are available.  Do the two different
-optimizers lead to similar estimated variances?
+The second, more complex example is based on a model in @federer2003proc in which orthogonal polynomials are used to model trends along the rows and columns of a field experiment.  The data are available in the `agridat` package [@wright2014agridat] as the `federer.diagcheck` data frame. The help page for that data shows how to reproduce the analysis of @federer2003proc.  When using the `lme4` package to reproduce the analysis, two different optimizers are available.  Do the two different optimizers lead to similar estimated variances?
 
-In the output below, the first column identifies terms in the model, the next
-two columns are the variance and standard deviation from the 'bobyqa'
-optimizer, while the final two columns are from the 'NelderMead'
-optimizer.  Note, these results are from `lme4` version 1.1-7 and are likely to
-be different than the results from more recent versions of `lme4`.
+In the output below, the first column identifies terms in the model, the next two columns are the variance and standard deviation from the 'bobyqa' optimizer, while the final two columns are from the 'NelderMead' optimizer.  Note, these results are from `lme4` version 1.1-7 and are likely to be different than the results from more recent versions of `lme4`.
 
 The default output printing is shown first.
 
@@ -375,29 +335,20 @@ names(out) <- c('term','vcov-bo','sdcor-bo','sep','vcov-ne','sdcor-ne')
 ```{r}
 print(out)
 ```
-How similar are the variance estimates obtained from the two optimization
-methods? It is difficult to compare the results due to the clutter of extra
-digits, and because of some quirks in the way R formats the
-output.  The variances in column 2 are shown in non-scientific format, while
-the variances in column 5 are shown in scientific format.  The standard
-deviations are shown with 5 decimal places in column 3 and 8 decimal places in
-column 6.  (All numbers were stored with 15 digits of precision.)
+
+How similar are the variance estimates obtained from the two optimization methods? It is difficult to compare the results due to the clutter of extra digits, and because of some quirks in the way R formats the output.  The variances in column 2 are shown in non-scientific format, while the variances in column 5 are shown in scientific format.  The standard deviations are shown with 5 decimal places in column 3 and 8 decimal places in column 6.  (All numbers were stored with 15 digits of precision.)
 
 The `lucid()` function is now used to show the results in the manner of the
 `vc()` function.
 ```{r}
 lucid(out, dig=4)
 ```
-The formatting of the variance columns is consistent as is the formatting of
-the standard deviation columns.  Fewer digits are shown.  It is easy to
-compare the columns and see that the two optimizers are giving quite different
-answers.  Note: The Bobyqa results are almost identical to the results
-obtained when using ASREML or SAS.
+The formatting of the variance columns is consistent as is the formatting of the standard deviation columns.  Fewer digits are shown. It is easy to compare the columns and see that the two optimizers are giving quite different answers.  Note: The Bobyqa results are almost identical to the results obtained when using ASREML or SAS.
 
 Note: Data frames have no quotes, but numeric matrices are printed with quotes.  Use `noquote()` to print without quotes, for example:
+
 ```{r }
 noquote(lucid(as.matrix(head(mtcars)),2))
 ``` 
-
 
 ## References
