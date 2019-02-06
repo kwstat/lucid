@@ -1,4 +1,27 @@
 
+# lucid 1.7
+
+Minor update to fix testthat case broken by lme4 update.
+
+## test environments
+
+* local R 3.5.2 on Windows 7
+* win-builder release 3.5.2
+* win-builder devel (2018-08-22 r75177)
+
+## R CMD check results
+
+There was 1 NOTE:
+
+Found the following (possibly) invalid URLs:
+  URL: https://doi.org/10.2307/2344922
+    From: inst/doc/lucid_examples.html
+    Status: 403
+    Message: Forbidden
+    
+This URL works fine in my browser, which "sometimes happens" according to https://cran.r-project.org/web/packages/URL_checks.html
+Please let me know if I should do something differently.
+
 # lucid 1.6
 
 ## test environments

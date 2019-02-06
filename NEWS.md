@@ -1,3 +1,8 @@
+# lucid 1.7 - Feb 2019
+
+Fix test case to accommodate changes in `lme4` output.
+
+# lucid 1.6
 
 # lucid 1.5 - Aug 2018
 

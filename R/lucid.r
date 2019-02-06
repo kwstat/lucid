@@ -1,4 +1,4 @@
-# lucid.r
+# lucid.R
 # Time-stamp: <07 Aug 2017 16:16:05 c:/x/rpack/lucid/R/lucid.R>
 
 # lucid is primarily a _formatting_ function similar to

@@ -1,5 +1,5 @@
 Package: lucid
-Version: 1.6
+Version: 1.7
 Authors@R: person("Kevin","Wright", email="kw.stat@gmail.com", 
                   comment=c(ORCID = "0000-0002-0617-8673"), 
                   role=c("aut","cre"))
@@ -27,4 +27,4 @@ Suggests:
   rjags,
   testthat
 Encoding: UTF-8
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
