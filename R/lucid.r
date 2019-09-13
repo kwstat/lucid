@@ -64,13 +64,15 @@
 #' print(df1)
 #' lucid(df1)
 #' 
-#' # Which are smallest/largest/significant variance components
+# # Which are smallest/largest/significant variance components
 #' df2 <- data.frame(effect=c("hyb","region","region:loc","hyb:region",
 #'                            "yr","hyb:yr","region:yr","R!variance"),
 #'                   component=c(10.9,277,493,1.30E-04,126,22.3,481,268),
 #'                   std.error=c(4.40,166,26.1,1.58E-06,119,4.50,108,3.25),
-#'                   z.ratio=c(2.471,1.669,18.899,82.242,1.060,4.951,4.442,82.242),
-#' constraint=c("pos","pos","pos","bnd","pos","pos","pos","pos"))
+#'                   z.ratio=c(2.471,1.669,18.899,82.242,
+#'                   1.060,4.951,4.442,82.242),
+#'                   constraint=c("pos","pos","pos","bnd",
+#'                   "pos","pos","pos","pos"))
 #' print(df2)
 #' lucid(df2)
 #' 
@@ -123,13 +125,9 @@ lucid.matrix <- function(x, dig=3, na.value=NULL, ...){
 }
 
 
-#' @rdname lucid
+#' @rdname lucid 
 #' @export
 lucid.list <- function(x, dig=3, na.value=NULL, ...){
-  #  for(ii in 1:length(x)){
-  #    cat(names(x)[ii], ":\n")
-  #    lucid(x[[ii]], dig=dig, na.value=na.value)
-  #  }
   x[] <- lapply(x, lucid, dig, na.value)
   x
 }
@@ -144,45 +142,46 @@ lucid.tbl_df <- function(x, dig=3, na.value=NULL, ...){
   x
 }
 
-# ----- tests -----
 
-if(FALSE){
-
-  require(lucid)
-  
-  # Default
-  lucid(letters)
-
-  # Vector
-  lvec <- runif(10)
-  lvec[5] <- NA
-  lucid(lvec)
-  lvec <- c(1.23, NA, 123, 123000)
-  lucid(lvec)
-  lucid(lvec, na.value="")
-  lucid(lvec, na.value="--")
-
-  # data.frame
-  ldf <- mtcars[1:10,]
-  ldf[3,] <- NA
-  lucid(ldf)
-  lucid(ldf, na="")
-  lucid(ldf, na="--")
-  lucid(ldf, dig=2, na="--")
-  
-  # matrix
-  lmat <- as.matrix(mtcars[1:10,])
-  lmat[5,1] <- lmat[4,2] <- lmat[6,3] <- lmat[3,4] <- NA
-  lucid(lmat)
-  lucid(lmat, na="")
-  lucid(lmat, na=" -")
-  lucid(lmat, dig=2, na="-")
-  # To omit quotes from matrix output
-  noquote(lucid(lmat, dig=2, na="-"))
-  print(lucid(lmat, dig=2, na="-"), quote=FALSE)
-
-  # list
-  ll <- list(lvec=lvec, ldf=ldf, lmat=lmat)
-  lucid(ll)
-
-}
+# # ----- tests -----
+# 
+# if(FALSE){
+# 
+#   require(lucid)
+#   
+#   # Default
+#   lucid(letters)
+# 
+#   # Vector
+#   lvec <- runif(10)
+#   lvec[5] <- NA
+#   lucid(lvec)
+#   lvec <- c(1.23, NA, 123, 123000)
+#   lucid(lvec)
+#   lucid(lvec, na.value="")
+#   lucid(lvec, na.value="--")
+# 
+#   # data.frame
+#   ldf <- mtcars[1:10,]
+#   ldf[3,] <- NA
+#   lucid(ldf)
+#   lucid(ldf, na="")
+#   lucid(ldf, na="--")
+#   lucid(ldf, dig=2, na="--")
+#   
+#   # matrix
+#   lmat <- as.matrix(mtcars[1:10,])
+#   lmat[5,1] <- lmat[4,2] <- lmat[6,3] <- lmat[3,4] <- NA
+#   lucid(lmat)
+#   lucid(lmat, na="")
+#   lucid(lmat, na=" -")
+#   lucid(lmat, dig=2, na="-")
+#   # To omit quotes from matrix output
+#   noquote(lucid(lmat, dig=2, na="-"))
+#   print(lucid(lmat, dig=2, na="-"), quote=FALSE)
+# 
+#   # list
+#   ll <- list(lvec=lvec, ldf=ldf, lmat=lmat)
+#   lucid(ll)
+# 
+# }

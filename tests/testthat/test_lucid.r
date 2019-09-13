@@ -1,7 +1,5 @@
 # test_lucid.R
-# Time-stamp: <25 Apr 2017 15:00:22 c:/x/rpack/lucid/tests/testthat/test_lucid.R>
-
-context("test_lucid.R")
+# Time-stamp: <23 Apr 2019 15:05:44 c:/x/rpack/lucid/tests/testthat/test_lucid.R>
 
 test_that("default", {
   expect_equal(lucid(letters),

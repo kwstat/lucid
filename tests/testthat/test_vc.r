@@ -1,7 +1,5 @@
 # test_vc.R
-# Time-stamp: <25 Apr 2017 15:19:30 c:/x/rpack/lucid/tests/testthat/test_vc.R>
-
-context("test_vc.R")
+# Time-stamp: <23 Apr 2019 15:05:49 c:/x/rpack/lucid/tests/testthat/test_vc.R>
 
 require(lucid)
 data(Rail, package="nlme")
@@ -17,8 +15,10 @@ test_that("nlme", {
   m1n <- lme(travel~1, random=~1|Rail, data=Rail)
   expect_equal(
     vc(m1n),
-      structure(list(effect = structure(1:2, .Label = c("(Intercept)", "Residual"), 
-                                        class = "factor"), 
+      structure(list(effect = 
+                       structure(1:2, 
+                                 .Label = c("(Intercept)", "Residual"), 
+                                 class = "factor"), 
                      variance = c(615.311, 16.167), 
                      stddev = c(24.805, 4.021)), 
                 .Names = c("effect", "variance", "stddev"), 
@@ -76,15 +76,19 @@ test_that("asreml", {
     m1a <- asreml(travel~1, random=~Rail, data=Rail)
     expect_equal(
       vc(m1a),
-      structure(list(effect = structure(1:2, .Label = c("Rail!Rail.var", "R!variance"), 
-                                        class = "factor"), 
-                     component = c(615.311, 16.167), 
-                     std.error = c(392.571, 6.600), 
-                     z.ratio = c(1.567, 2.450), 
-                     constraint = structure(c(1L, 1L), .Names = c("Rail!Rail.var", "R!variance"), .Label = "Positive", 
-class = "factor")), .Names = c("effect", 
-"component", "std.error", "z.ratio", "constraint"), row.names = c(NA, 
--2L), class = c("vc.asreml", "data.frame")),
+      structure(list(effect = structure(
+        1:2, .Label = c("Rail!Rail.var", "R!variance"), 
+        class = "factor"), 
+        component = c(615.311, 16.167), 
+        std.error = c(392.571, 6.600), 
+        z.ratio = c(1.567, 2.450), 
+        constraint = structure(c(1L, 1L), 
+                               .Names = c("Rail!Rail.var", "R!variance"), 
+                               .Label = "Positive", 
+                               class = "factor")), 
+        .Names = c("effect", "component", "std.error", "z.ratio", "constraint"), 
+        row.names = c(NA, 
+                                                                                                                                -2L), class = c("vc.asreml", "data.frame")),
       tolerance=1e-2)
   # print method
   print(vc(m1a))

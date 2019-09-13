@@ -230,19 +230,17 @@ print.vc.mcmc.list <- function(x, dig=4, ...){
 
 if(FALSE) {
 
-  # see tests folder
-  
-  require("nlme")
-  #data(Rail)
-  m1n <- lme(travel~1, random=~1|Rail, data=Rail)
-  vc(m1n)
-
-  require("lme4")
-  m1l <- lmer(travel~1 + (1|Rail), data=Rail)
-  vc(m1l)
-
-  require("asreml")
-  m1a <- asreml(travel~1, random=~Rail, data=Rail)
-  vc(m1a)
+  # require("nlme")
+  # #data(Rail)
+  # m1n <- lme(travel~1, random=~1|Rail, data=Rail)
+  # vc(m1n)
+  # 
+  # require("lme4")
+  # m1l <- lmer(travel~1 + (1|Rail), data=Rail)
+  # vc(m1l)
+  # 
+  # require("asreml")
+  # m1a <- asreml(travel~1, random=~Rail, data=Rail)
+  # vc(m1a)
   
 }

@@ -1,8 +1,11 @@
-# lucid <img src="figure/lucid_logo_150.png" align="right" />
+# lucid <img src="man/figures/logo.png" align="right" />
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/lucid)](https://cran.r-project.org/package=lucid)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/lucid)](https://cranlogs.r-pkg.org/badges/lucid)
 
+Homepage: https://kwstat.github.io/lucid/
+
+Repository: https://github.com/kwstat/lucid
 
 The 'lucid' package provides a simple function to improve the format of floating-point numbers for humans. The 'lucid()' function is primarily a _formatting_ function similar to 'round' and 'signif', but output is always character.
 
@@ -13,6 +16,7 @@ Key features:
 * Simple to use.
 
 * Makes floating-point numbers easier to read.
+
 
 ## Installation
 
@@ -25,9 +29,6 @@ install.packages("devtools")
 devtools::install_github("kwstat/lucid")
 ```
 
-## Vignettes
- 
-[Lucid printing of floating-point vectors](https://rawgit.com/kwstat/lucid/master/vignettes/lucid_examples.html)
 
 ## Usage
 
