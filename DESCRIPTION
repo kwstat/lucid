@@ -13,7 +13,7 @@ Description: Print vectors (and data frames) of floating point numbers
     VA: American Statistical Association. 2270-2279.
 LazyData: yes
 License: GPL-3
-URL: https://github.com/kwstat/lucid
+URL: https://kwstat.github.io/lucid/
 BugReports: https://github.com/kwstat/lucid/issues
 VignetteBuilder: knitr
 Imports:
