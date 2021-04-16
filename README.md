@@ -3,7 +3,7 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/lucid)](https://cran.r-project.org/package=lucid)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/lucid)](https://cranlogs.r-pkg.org/badges/lucid)
 
-Homepage: https://kwstat.github.io/lucid/
+Homepage: https://kwstat.github.io/lucid
 
 Repository: https://github.com/kwstat/lucid
 
@@ -11,7 +11,7 @@ The 'lucid' package provides a simple function to improve the format of floating
 
 Note: The `lucid` package was created before the `tibble` package. The `tibble` package now uses a similar style of formatting dataframes. 
 
-Key features:
+## Key features
 
 * Simple to use.
 

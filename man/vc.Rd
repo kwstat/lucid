@@ -8,6 +8,7 @@
 \alias{vc.glmerMod}
 \alias{vc.lmerMod}
 \alias{vc.mcmc.list}
+\alias{vc.mmer}
 \title{Extract variance components from mixed models}
 \usage{
 vc(object, ...)
@@ -23,6 +24,8 @@ vc(object, ...)
 \method{vc}{lmerMod}(object, ...)
 
 \method{vc}{mcmc.list}(object, quantiles = c(0.025, 0.5, 0.975), ...)
+
+\method{vc}{mmer}(object, ...)
 }
 \arguments{
 \item{object}{A fitted model object}
@@ -39,7 +42,7 @@ A data frame or other object.
 }
 \description{
 Extract the variance components from a fitted model.  Currently supports
-\code{asreml}, \code{lme4}, \code{nlme} and \code{mcmc.list} objects.
+\code{asreml}, \code{lme4}, \code{mmer}, \code{nlme} and \code{mcmc.list} objects.
 }
 \details{
 The extracted variance components are stored in a data frame with an

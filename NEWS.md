@@ -1,3 +1,7 @@
+# lucid 1.8 - Apr 2021
+
+* Add method for `sommer::mmer` objects.
+
 # lucid 1.7 - Feb 2019
 
 * Fix test case to accommodate changes in `lme4` output.

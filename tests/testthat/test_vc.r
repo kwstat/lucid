@@ -19,11 +19,11 @@ test_that("nlme", {
                        structure(1:2, 
                                  .Label = c("(Intercept)", "Residual"), 
                                  class = "factor"), 
-                     variance = c(615.311, 16.167), 
-                     stddev = c(24.805, 4.021)), 
+                     variance = c(615.31, 16.17), 
+                     stddev = c(24.81, 4.02)), 
                 .Names = c("effect", "variance", "stddev"), 
                 row.names = c(NA, -2L), class = c("vc.lme", "data.frame")),
-    tolerance=1e-2)
+    tolerance=1e-1)
 
   # print method
   print(vc(m1n))
@@ -39,11 +39,11 @@ test_that("lmer", {
     structure(list(grp = c("Rail", "Residual"), 
                    var1 = c("(Intercept)", NA), 
                    var2 = c(NA_character_, NA_character_), 
-                   vcov = c(615.315, 16.167), 
-                   sdcor = c(24.806, 4.021)), 
+                   vcov = c(615.32, 16.17), 
+                   sdcor = c(24.81, 4.02)), 
               row.names = c(NA, -2L), 
               class = c("vc.lmerMod", "data.frame")),
-    tolerance=1e-2)
+    tolerance=1e-1)
 
   # print method
   print(vc(m1l))
@@ -59,11 +59,11 @@ test_that("glmer", {
     structure(list(grp = c("Rail", "Residual"), 
                    var1 = c("(Intercept)", NA), 
                    var2 = c(NA_character_, NA_character_), 
-                   vcov = c(1.638, 11.112), 
-                   sdcor = c(1.280, 3.333)), 
+                   vcov = c(1.64, 11.11), 
+                   sdcor = c(1.28, 3.33)), 
               .Names = c("grp", "var1", "var2", "vcov", "sdcor"), 
               row.names = c(NA, -2L), class = c("vc.lmerMod", "data.frame")),
-    tolerance=1e-2)
+    tolerance=1e-1)
   # print
   print(vc(m1g))
 })
@@ -76,21 +76,36 @@ test_that("asreml", {
     m1a <- asreml(travel~1, random=~Rail, data=Rail)
     expect_equal(
       vc(m1a),
-      structure(list(effect = structure(
-        1:2, .Label = c("Rail!Rail.var", "R!variance"), 
+      structure(list(effect = structure(1:2, .Label = c("Rail", "units!R"), 
         class = "factor"), 
-        component = c(615.311, 16.167), 
-        std.error = c(392.571, 6.600), 
-        z.ratio = c(1.567, 2.450), 
-        constraint = structure(c(1L, 1L), 
-                               .Names = c("Rail!Rail.var", "R!variance"), 
-                               .Label = "Positive", 
-                               class = "factor")), 
-        .Names = c("effect", "component", "std.error", "z.ratio", "constraint"), 
-        row.names = c(NA, 
-                                                                                                                                -2L), class = c("vc.asreml", "data.frame")),
-      tolerance=1e-2)
+        component = c(615.74, 16.18), 
+        std.error = c(391.58, 6.61), 
+        z.ratio = c(1.57, 2.45), 
+        bound=c("P", "P"),
+        `%ch` = c(0.2, 0)), 
+        class = c("vc.asreml", "data.frame"), 
+        row.names = c(NA, -2L)),
+      tolerance=1e-1)
   # print method
   print(vc(m1a))
   }})
   
+# ----------------------------------------------------------------------------
+
+test_that("mmer",{  
+  require("sommer")
+  m1s <- mmer(travel~1, random = ~ Rail, data=Rail)
+  expect_equal(
+    vc(m1s),
+    structure(list(effect = c("Rail.travel-travel", "units.travel-travel"),
+                   VarComp = c(615.26, 16.17), 
+                   VarCompSE = c(392.28, 6.60), 
+                   Zratio = c(1.57, 2.45), 
+                   Constraint = c("Positive", "Positive")), 
+              row.names = c(NA, -2L), 
+              class = c("vc.mmer", "data.frame")),
+    tolerance=1e-1)
+  # print
+  print(vc(m1s))
+  
+})

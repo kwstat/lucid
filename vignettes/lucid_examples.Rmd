@@ -3,9 +3,7 @@ title: "Lucid printing of floating-point vectors"
 author: "Kevin Wright"
 date: "`r Sys.Date()`"
 output:
-  rmarkdown::html_vignette: default
-  html_document:
-    highlight: tango
+  rmarkdown::html_vignette:
 bibliography: lucid.bib
 vignette: >
   %\VignetteIndexEntry{Lucid printing of floating-point vectors}

@@ -14,7 +14,7 @@
 #' Extract variance components from mixed models
 #' 
 #' Extract the variance components from a fitted model.  Currently supports
-#' \code{asreml}, \code{lme4}, \code{nlme} and \code{mcmc.list} objects.
+#' \code{asreml}, \code{lme4}, \code{mmer}, \code{nlme} and \code{mcmc.list} objects.
 #' 
 #' The extracted variance components are stored in a data frame with an
 #' additional 'vc.xxx' class that has an associated print method.
@@ -192,6 +192,8 @@ print.vc.lmerMod <- function(x, dig=4, ...){
   invisible(x)
 }
 
+
+
 # ----- mcmc.list -----
 
 #' @rdname vc
@@ -225,13 +227,47 @@ print.vc.mcmc.list <- function(x, dig=4, ...){
   invisible()
 }
 
+# ----- mmer -----
+
+#' @rdname vc
+#' @export
+vc.mmer <- function(object, ...){
+  
+  vv <- summary(object)$varcomp
+  vv <- data.frame(effect=row.names(vv), vv)
+  rownames(vv) <- NULL
+  class(vv) <- c("vc.mmer", class(vv))
+  return(vv)
+}
+
+#' @export
+print.vc.mmer  <- function(x, dig=4, ...){
+
+  class(x) <- class(x)[-1] # remove vc.mmer
+  
+  # Use 2 signif decimals for Zratio
+  x$Zratio <- signif(x$Zratio, 2)
+  
+  x[] <- lapply(x, lucid, dig)
+  
+  # Rename for printing.
+  cn <- colnames(x)
+  cn[cn=="Constraint"] <- "Constr"
+  colnames(x) <- cn
+
+  x$Constr <- substring(x$Constr, 1, 1)
+
+  print(x, row.names=FALSE) # Do not print row numbers
+  invisible(x)
+}
+
 
 # ----- tests -----
 
 if(FALSE) {
 
-  # require("nlme")
-  # #data(Rail)
+  #require("nlme")
+  #data(Rail)
   # m1n <- lme(travel~1, random=~1|Rail, data=Rail)
   # vc(m1n)
   # 
@@ -242,5 +278,13 @@ if(FALSE) {
   # require("asreml")
   # m1a <- asreml(travel~1, random=~Rail, data=Rail)
   # vc(m1a)
+  #
+  #require("nlme")
+  #data(Rail)
+  #require("sommer")
+  #m1s <- mmer(travel~1, random=~Rail, data=Rail)
+  #kk=vc(m1s)
+  #vc(m1s)
+  
   
 }

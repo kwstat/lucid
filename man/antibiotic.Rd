@@ -4,14 +4,16 @@
 \name{antibiotic}
 \alias{antibiotic}
 \title{Effectiveness of 3 antibiotics against 16 bacterial species.}
-\format{A data frame with 16 observations on the following 5 variables.
+\format{
+A data frame with 16 observations on the following 5 variables.
 \describe{ 
 \item{\code{bacteria}}{bacterial species, 16 levels}
 \item{\code{penicillin}}{MIC for penicillin}
 \item{\code{streptomycin}}{MIC for streptomycin}
 \item{\code{neomycin}}{MIC for neomycin} 
 \item{\code{gramstain}}{Gram staining (positive or negative)} 
-}}
+}
+}
 \source{
 Will Burtin (1951). \emph{Scope}.  Fall, 1951.
 }

@@ -76,13 +76,14 @@ rownames(df1) <- c("A","B","C","C1","C2","D","(Intercept)")
 print(df1)
 lucid(df1)
 
-# Which are smallest/largest/significant variance components
 df2 <- data.frame(effect=c("hyb","region","region:loc","hyb:region",
                            "yr","hyb:yr","region:yr","R!variance"),
                   component=c(10.9,277,493,1.30E-04,126,22.3,481,268),
                   std.error=c(4.40,166,26.1,1.58E-06,119,4.50,108,3.25),
-                  z.ratio=c(2.471,1.669,18.899,82.242,1.060,4.951,4.442,82.242),
-constraint=c("pos","pos","pos","bnd","pos","pos","pos","pos"))
+                  z.ratio=c(2.471,1.669,18.899,82.242,
+                  1.060,4.951,4.442,82.242),
+                  constraint=c("pos","pos","pos","bnd",
+                  "pos","pos","pos","pos"))
 print(df2)
 lucid(df2)
 

@@ -1,3 +1,17 @@
+# lucid 1.8
+
+Add rmarkdown to Suggests (request of CRAN)
+
+## test environments
+
+* local R 4.0. on Windows 10
+* win-builder devel
+* rhub
+
+## RCMD check results
+
+No warnings or errors.
+
 
 # lucid 1.7
 
