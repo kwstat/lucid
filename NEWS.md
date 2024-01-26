@@ -1,3 +1,13 @@
+# lucid 1.9 - unpublished
+
+todo. matrix is printed with quotes, but tibble does NOT.  But tibbles
+are only printing 6 rows. Maybe the "pillar" package could help?
+
+as.matrix(mtcars) %>% lucid
+as.matrix(mtcars) %>% as_tibble
+
+* Switch to MIT license.
+
 # lucid 1.8 - Apr 2021
 
 * Add method for `sommer::mmer` objects.
