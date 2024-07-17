@@ -1,0 +1,9 @@
+pandoc: 3.1.11
+pkgdown: 2.1.0
+pkgdown_sha: ~
+articles:
+  lucid_examples: lucid_examples.html
+last_built: 2024-07-17T12:07Z
+urls:
+  reference: http://kwstat.github.io/lucid/reference
+  article: http://kwstat.github.io/lucid/articles
