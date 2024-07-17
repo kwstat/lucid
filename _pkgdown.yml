@@ -1,1 +1,4 @@
-destination: docs
+url: http://kwstat.github.io/lucid/
+template:
+  bootstrap: 5
+

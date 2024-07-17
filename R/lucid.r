@@ -95,7 +95,7 @@ lucid.numeric <- function(x, dig=3, na.value=NULL, ...) {
   # This is the main function that formats a vector, but NO PRINTING
 
   # Use 3 significant digits, drop trailing zero, align decimals
-  if(class(x)=="numeric" | class(x)=="integer") {
+  if(inherits(x, "numeric") | inherits(x, "integer")) {
     xx <- format(format(signif(zapsmall(x), dig),
                         scientific=FALSE, drop0trailing=TRUE))
 

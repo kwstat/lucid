@@ -230,7 +230,7 @@ vc(m4)
 
 In a Bayesian model all effects can be considered as random.
 
-```{r jags, message=FALSE}
+```{r jags, eval=FALSE, echo=TRUE, message=FALSE}
 require("nlme")
 data(Rail)
 require("rjags")
@@ -256,7 +256,7 @@ close(tc5)
 c5 <- coda.samples(j5, c("mu","theta", "residual", "sigma.rail"), 
                    n.iter=100000, thin=5, progress.bar="none")
 ``` 
-```{r}
+```{r, eval=FALSE, echo=FALSE}
 vc(c5)
 ```
 Compare the JAGS point estimates and quantiles (above) with the results from
@@ -267,11 +267,7 @@ m4
 ranef(m4)
 ```
 
-While the `lucid()` function is primarily a formatting function and uses
-the standard `print()` functions in R, the `vc()` function defines an
-additional class for the value of the function and has dedicated `print`
-methods for the class.  This was done to allow additional formatting of the
-results.
+While the `lucid()` function is primarily a formatting function and uses the standard `print()` functions in R, the `vc()` function defines an additional class for the value of the function and has dedicated `print` methods for the class.  This was done to allow additional formatting of the results.
 
 
 ### vc() example 2 - Analysis of federer.diagcheck data
