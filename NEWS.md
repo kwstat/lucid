@@ -1,7 +1,10 @@
-# lucid 1.9  unpublished
+# lucid 1.9 (2025-04-03)
 
 * Switch to MIT license.
 
+* Documentation pages now created via Github Actions.
+
+* Fix vignette bug in the display of antibiotic dotplot.
 
 todo. matrix is printed with quotes, but tibble does NOT.  But tibbles
 are only printing 6 rows. Maybe the "pillar" package could help?

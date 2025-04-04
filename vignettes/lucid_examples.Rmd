@@ -1,7 +1,7 @@
 ---
 title: "Lucid printing of floating-point vectors"
 author: "Kevin Wright"
-date: "`r Sys.Date()`"
+date: "2021-04-16"
 output:
   rmarkdown::html_vignette:
 bibliography: lucid.bib
@@ -139,18 +139,15 @@ A stem-and-leaf plot is a semi-graphical display of data, in that the _positions
 
 ```{r dotplot, echo=FALSE, message=FALSE, fig.height=4, fig.width=6}
 require(lattice)
-anti=antibiotic # make a copy of the data to reverse the levels
+anti=antibiotic # make a copy of the data to sort levels top-down
 anti$bacteria <- factor(anti$bacteria, levels=rev(anti$bacteria))
 
-cust <- myyscale.component <- function(...) {  #Custom y-scale function component
+#Custom y-scale function component. Be sure to reverse the levels.
+cust <- myyscale.component <- function(...) {
   ans <- yscale.components.default(...)
   ans$right <- ans$left
   foo <- ans$right$labels$at
-  ans$right$labels$labels <-
-    rev(c(" 870    ","   1    ","   0.001","   0.005"," 100    ",
-          " 850    "," 800    ","   3    "," 850    ","   1    ",
-          "  10    ","   0.007","   0.03 ","   1    ",
-          "   0.001","   0.005"))
+  ans$right$labels$labels <- rev(lucid(anti$penicillin))
   return(ans)
 }
 
