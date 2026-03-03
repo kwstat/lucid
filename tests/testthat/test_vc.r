@@ -11,7 +11,7 @@ test_that("default", {
 })
 
 test_that("nlme", {
-  require(nlme)
+  skip_if(!require(nlme))
   m1n <- lme(travel~1, random=~1|Rail, data=Rail)
   expect_equal(
     vc(m1n),
@@ -32,7 +32,7 @@ test_that("nlme", {
 # ----------------------------------------------------------------------------
 
 test_that("lmer", {
-  require("lme4")
+  skip_if(!require("lme4"))
   m1l <- lmer(travel~1 + (1|Rail), data=Rail)
   expect_equal(
     vc(m1l),
@@ -52,18 +52,19 @@ test_that("lmer", {
 # ----------------------------------------------------------------------------
 
 test_that("glmer", {
-  require("lme4")
+  skip_if(!require("lme4"))
+  skip_if(packageVersion("lme4") < "2.0.1")
   m1g <- glmer(travel~1 + (1|Rail), data=Rail, family=gaussian(link="log"))
+  ref_val <- structure(list(grp = "Rail",
+                            var1 = "(Intercept)", var2 = NA_character_, 
+                            vcov = 0.147400652477768,
+                            sdcor = 0.383927926149906),
+                       row.names = c(NA, -1L),
+                       class = c("vc.lmerMod", "data.frame"))
   expect_equal(
     vc(m1g),
-    structure(list(grp = c("Rail", "Residual"), 
-                   var1 = c("(Intercept)", NA), 
-                   var2 = c(NA_character_, NA_character_), 
-                   vcov = c(1.64, 11.11), 
-                   sdcor = c(1.28, 3.33)), 
-              .Names = c("grp", "var1", "var2", "vcov", "sdcor"), 
-              row.names = c(NA, -2L), class = c("vc.lmerMod", "data.frame")),
-    tolerance=1e-1)
+    ref_val,
+    tolerance = 1e-1)
   # print
   print(vc(m1g))
 })
