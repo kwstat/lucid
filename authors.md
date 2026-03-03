@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/kwstat/lucid/blob/main/DESCRIPTION)
 
 Wright K (2026). *lucid: Printing Floating Point Numbers in a
-Human-Friendly Format*. R package version 1.9,
+Human-Friendly Format*. R package version 1.11,
 <https://kwstat.github.io/lucid/>.
 
     @Manual{,
       title = {lucid: Printing Floating Point Numbers in a Human-Friendly Format},
       author = {Kevin Wright},
       year = {2026},
-      note = {R package version 1.9},
+      note = {R package version 1.11},
       url = {https://kwstat.github.io/lucid/},
     }

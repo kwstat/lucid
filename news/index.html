@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">lucid</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,13 +36,18 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.11" id="lucid-111-2026-03-03">lucid 1.11 (2026-03-03)<a class="anchor" aria-label="anchor" href="#lucid-111-2026-03-03"></a></h2>
+<ul><li>Remove <code>broom</code> example from vignette. Suggested by F.Kohrt <a href="https://github.com/kwstat/lucid/issues/4" class="external-link">#4</a>.</li>
+<li>Bug fix for <code>lme4</code> <a href="https://github.com/kwstat/lucid/issues/6" class="external-link">#6</a>.</li>
+</ul><p>todo. matrix is printed with quotes, but tibble does NOT. But tibbles are only printing 6 rows. Maybe the “pillar” package could help?</p>
+<p>as.matrix(mtcars) %&gt;% lucid as.matrix(mtcars) %&gt;% as_tibble</p>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.9" id="lucid-19-2025-04-03">lucid 1.9 (2025-04-03)<a class="anchor" aria-label="anchor" href="#lucid-19-2025-04-03"></a></h2><p class="text-muted">CRAN release: 2025-04-04</p>
 <ul><li><p>Switch to MIT license.</p></li>
 <li><p>Documentation pages now created via Github Actions.</p></li>
 <li><p>Fix vignette bug in the display of antibiotic dotplot.</p></li>
-</ul><p>todo. matrix is printed with quotes, but tibble does NOT. But tibbles are only printing 6 rows. Maybe the “pillar” package could help?</p>
-<p>as.matrix(mtcars) %&gt;% lucid as.matrix(mtcars) %&gt;% as_tibble</p>
-</div>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.8" id="lucid-18-2021-04-01">lucid 1.8 (2021-04-01)<a class="anchor" aria-label="anchor" href="#lucid-18-2021-04-01"></a></h2><p class="text-muted">CRAN release: 2021-04-16</p>
 <ul><li>Add method for <code><a href="https://rdrr.io/pkg/sommer/man/mmer.html" class="external-link">sommer::mmer</a></code> objects.</li>

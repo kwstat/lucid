@@ -209,80 +209,6 @@ right axis.
 
 ![](lucid_examples_files/figure-html/dotplot-1.png)
 
-### Example: Using `lucid` with `broom`
-
-The `broom` package by Robinson (2016) can be used to collect statistics
-from fitted models into tidy data frames. For example, using the
-`Orange` tree data, it is possible to fit a separate regression line for
-each tree. (The straight-line regression here is not entirely sensible,
-but illustrates a point.)
-
-``` r
-require(dplyr)
-```
-
-    ## Loading required package: dplyr
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
-require(broom)
-```
-
-    ## Loading required package: broom
-
-``` r
-Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~ age, data=.)))
-```
-
-    ## # A tibble: 10 × 6
-    ## # Groups:   Tree [5]
-    ##    Tree  term        estimate std.error statistic   p.value
-    ##    <ord> <chr>          <dbl>     <dbl>     <dbl>     <dbl>
-    ##  1 3     (Intercept)  19.2      5.86         3.28 0.0221   
-    ##  2 3     age           0.0811   0.00563     14.4  0.0000290
-    ##  3 1     (Intercept)  24.4      6.54         3.73 0.0135   
-    ##  4 1     age           0.0815   0.00628     13.0  0.0000485
-    ##  5 5     (Intercept)   8.76     8.18         1.07 0.333    
-    ##  6 5     age           0.111    0.00785     14.1  0.0000318
-    ##  7 2     (Intercept)  20.0      9.35         2.13 0.0859   
-    ##  8 2     age           0.125    0.00898     13.9  0.0000343
-    ##  9 4     (Intercept)  14.6     11.2          1.30 0.249    
-    ## 10 4     age           0.135    0.0108      12.5  0.0000573
-
-Extracting information from the sea of numbers above is difficult. The
-`lucid` function comes to the rescue, simply by adding one more step to
-the sequence of pipes.
-
-``` r
-Orange %>% group_by(Tree) %>% do(tidy(lm(circumference ~  age, data=.))) %>% lucid
-```
-
-    ##    Tree        term estimate std.error statistic   p.value
-    ## 1     3 (Intercept)  19.2      5.86         3.28 0.0221   
-    ## 2     3         age   0.0811   0.00563     14.4  0.000029 
-    ## 3     1 (Intercept)  24.4      6.54         3.73 0.0135   
-    ## 4     1         age   0.0815   0.00628     13    0.0000485
-    ## 5     5 (Intercept)   8.76     8.18         1.07 0.333    
-    ## 6     5         age   0.111    0.00785     14.1  0.0000318
-    ## 7     2 (Intercept)  20        9.35         2.13 0.0859   
-    ## 8     2         age   0.125    0.00898     13.9  0.0000343
-    ## 9     4 (Intercept)  14.6     11.2          1.3  0.249    
-    ## 10    4         age   0.135    0.0108      12.5  0.0000573
-
-After formatting, information in the table almost jumps out at the
-reader, reducing the amount of cognitive effort needed for
-interpretation.
-
 ### Example: Application to mixed models
 
 During the process of iterative fitting of mixed models, it is often
@@ -332,13 +258,6 @@ require("nlme")
 ```
 
     ## Loading required package: nlme
-
-    ## 
-    ## Attaching package: 'nlme'
-
-    ## The following object is masked from 'package:dplyr':
-    ## 
-    ##     collapse
 
 ``` r
 data(Rail)
@@ -605,9 +524,6 @@ Manual of Crop Experimentation*. Charles Griffin; Company.
 Pinheiro, Jose, Douglas Bates, Saikat DebRoy, Deepayan Sarkar, and R
 Core Team. 2014. *nlme: Linear and Nonlinear Mixed Effects Models*.
 <https://CRAN.R-project.org/package=nlme>.
-
-Robinson, David. 2016. *broom: Convert Statistical Analysis Objects into
-Tidy Data Frames*. <https://CRAN.R-project.org/package=broom>.
 
 Wainer, Howard. 1997. “Improving Tabular Displays, with NAEP Tables as
 Examples and Inspirations.” *Journal of Educational and Behavioral

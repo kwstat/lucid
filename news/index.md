@@ -1,5 +1,16 @@
 # Changelog
 
+## lucid 1.11 (2026-03-03)
+
+- Remove `broom` example from vignette. Suggested by F.Kohrt
+  [\#4](https://github.com/kwstat/lucid/issues/4).
+- Bug fix for `lme4` [\#6](https://github.com/kwstat/lucid/issues/6).
+
+todo. matrix is printed with quotes, but tibble does NOT. But tibbles
+are only printing 6 rows. Maybe the “pillar” package could help?
+
+as.matrix(mtcars) %\>% lucid as.matrix(mtcars) %\>% as_tibble
+
 ## lucid 1.9 (2025-04-03)
 
 CRAN release: 2025-04-04
@@ -9,11 +20,6 @@ CRAN release: 2025-04-04
 - Documentation pages now created via Github Actions.
 
 - Fix vignette bug in the display of antibiotic dotplot.
-
-todo. matrix is printed with quotes, but tibble does NOT. But tibbles
-are only printing 6 rows. Maybe the “pillar” package could help?
-
-as.matrix(mtcars) %\>% lucid as.matrix(mtcars) %\>% as_tibble
 
 ## lucid 1.8 (2021-04-01)
 
