@@ -1,3 +1,23 @@
+# lucid 1.11
+
+## test environments
+
+* local R 4.5.2 on Windows 11
+* win-builder R-devel
+* win-builder R-release
+
+## RCMD check results
+
+No warnings or errors.
+
+## revdepcheck results
+
+We checked 4 reverse dependencies (1 from CRAN + 3 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
+
+
 # lucid 1.9
 
 ## test environments

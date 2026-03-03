@@ -1,6 +1,6 @@
 Package: lucid
 Title: Printing Floating Point Numbers in a Human-Friendly Format
-Version: 1.9
+Version: 1.11
 Authors@R: 
     person("Kevin", "Wright", , "kw.stat@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-0617-8673"))
@@ -30,4 +30,4 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
