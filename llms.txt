@@ -24,6 +24,7 @@ Note: The `lucid` package was created before the `tibble` package. The
 ## Installation
 
 ``` r
+
 # Install the released version from CRAN:
 install.packages("lucid")
 

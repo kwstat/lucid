@@ -1,6 +1,12 @@
 # Changelog
 
+## lucid 1.12 (2026-09-03)
+
+- Fix CRAN check issues with .Dim etc.
+
 ## lucid 1.11 (2026-03-03)
+
+CRAN release: 2026-03-03
 
 - Remove `broom` example from vignette. Suggested by F.Kohrt
   [\#4](https://github.com/kwstat/lucid/issues/4).

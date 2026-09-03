@@ -51,6 +51,7 @@ and Statistical Thinking to Improve Healthcare.
 ## Examples
 
 ``` r
+
 data(antibiotic)
 lucid(antibiotic)
 #>                      bacteria penicillin streptomycin neomycin gramstain

@@ -61,6 +61,7 @@ additional 'vc.xxx' class that has an associated print method.
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 
 require("nlme")

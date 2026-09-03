@@ -3,6 +3,7 @@
 ### Setup
 
 ``` r
+
 library("knitr")
     opts_chunk$set(fig.align="center", fig.width=6, fig.height=6)
 options(width=90)
@@ -94,6 +95,7 @@ takes too much effort to answer the questions. Now examine the same
 vector of coefficients with prettier formatting:
 
 ``` r
+
 require("lucid")
 options(digits=7) # knitr defaults to 4, R console uses 7
 lucid(df1)
@@ -141,6 +143,7 @@ data is included in the `lucid` package as a dataframe called
 `antibiotic`. The default view of this data is:
 
 ``` r
+
 print(antibiotic)
 ```
 
@@ -169,6 +172,7 @@ The [`lucid()`](http://kwstat.github.io/lucid/reference/lucid.md)
 display of the data is:
 
 ``` r
+
 lucid(antibiotic)
 ```
 
@@ -235,10 +239,10 @@ results using the
 [`lucid()`](http://kwstat.github.io/lucid/reference/lucid.md) function.
 
 Pearce et al. (1988) suggest showing four significant digits for the
-error mean square and two decimal places digits for $F$ values. The
+error mean square and two decimal places digits for $`F`$ values. The
 [`lucid()`](http://kwstat.github.io/lucid/reference/lucid.md) function
 uses a similar philosophy, presenting the variances with four
-significant digits and `asreml` $Z$ statistics with two significant
+significant digits and `asreml` $`Z`$ statistics with two significant
 digits.
 
 #### vc() example 1 - Rail data
@@ -254,12 +258,14 @@ Wilkinson (2014).
 ### nlme
 
 ``` r
+
 require("nlme")
 ```
 
     ## Loading required package: nlme
 
 ``` r
+
 data(Rail)
 mn <- lme(travel~1, random=~1|Rail, data=Rail)
 vc(mn)
@@ -272,6 +278,7 @@ vc(mn)
 ## lme4
 
 ``` r
+
 require("lme4")
 ```
 
@@ -287,6 +294,7 @@ require("lme4")
     ##     lmList
 
 ``` r
+
 m4 <- lmer(travel~1 + (1|Rail), data=Rail)
 vc(m4)
 ```
@@ -298,6 +306,7 @@ vc(m4)
 ## asreml
 
 ``` r
+
 # require("asreml")
 # ma <- asreml(travel~1, random=~Rail, data=Rail)
 # vc(ma)
@@ -311,6 +320,7 @@ vc(m4)
 In a Bayesian model all effects can be considered as random.
 
 ``` r
+
 require("nlme")
 data(Rail)
 require("rjags")
@@ -341,6 +351,7 @@ Compare the JAGS point estimates and quantiles (above) with the results
 from `lme4` below.
 
 ``` r
+
 m4
 ```
 
@@ -358,6 +369,7 @@ m4
     ##        66.5
 
 ``` r
+
 ranef(m4)
 ```
 
@@ -402,6 +414,7 @@ versions of `lme4`.
 The default output printing is shown first.
 
 ``` r
+
 print(out)
 ```
 
@@ -437,6 +450,7 @@ function is now used to show the results in the manner of the
 [`vc()`](http://kwstat.github.io/lucid/reference/vc.md) function.
 
 ``` r
+
 lucid(out, dig=4)
 ```
 
@@ -469,6 +483,7 @@ quotes. Use [`noquote()`](https://rdrr.io/r/base/noquote.html) to print
 without quotes, for example:
 
 ``` r
+
 noquote(lucid(as.matrix(head(mtcars)),2))
 ```
 
@@ -501,8 +516,8 @@ Farquhar, Arthur B., and Henry Farquhar. 1891. *Economic and Industrial
 Delusions*. New York: G. P. Putnam’s Sons.
 <https://books.google.com/books?id=BHkpAAAAYAAJ>.
 
-Federer, Walter T., and Russell D. Wolfinger. 2003. “Handbook of
-Formulas and Software for Plant Geneticists and Breeders.” In, edited by
+Federer, Walter T., and Russell D. Wolfinger. 2003. *Handbook of
+Formulas and Software for Plant Geneticists and Breeders*. Edited by
 Manjit Kang. Haworth Press.
 
 Feinberg, Richard A., and Howard Wainer. 2011. “Extracting Sunbeams from
@@ -533,8 +548,8 @@ Wainer, Howard, and Mike Larsen. 2009. “Pictures at an Exhibition.”
 *Chance* 22 (2): 46–54.
 <https://doi.org/10.1080/09332480.2009.10722958>.
 
-Wilkinson, Darren. 2014. “One-Way ANOVA with Fixed and Random Effects
-from a Bayesian Perspective.”
+Wilkinson, Darren. 2014. *One-Way ANOVA with Fixed and Random Effects
+from a Bayesian Perspective*.
 <https://darrenjw.wordpress.com/2014/12/22/one-way-anova-with-fixed-and-random-effects-from-a-bayesian-perspective/>.
 
 Wright, Kevin. 2014. *Agridat: Agricultural Datasets*.
