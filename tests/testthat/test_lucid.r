@@ -39,8 +39,8 @@ test_that("data.frame", {
     lucid(ldf),
     structure(list(Petal.Length = c("1.4", "1.4", "1.3"), 
                    Petal.Width = c("0.2", 
-"0.2", "0.2"), Species = structure(c(1L, 1L, 1L), .Label = c("setosa", 
-"versicolor", "virginica"), class = "factor")), .Names = c("Petal.Length", 
+"0.2", "0.2"), Species = structure(c(1L, 1L, 1L), levels = c("setosa", 
+"versicolor", "virginica"), class = "factor")), names = c("Petal.Length", 
 "Petal.Width", "Species"), row.names = c(NA, 3L), class = "data.frame")
 )
   
@@ -49,16 +49,16 @@ test_that("data.frame", {
     lucid(ldf),
     structure(list(Petal.Length = c("1.4", " NA", "1.3"), 
                    Petal.Width = c("0.2", 
-" NA", "0.2"), Species = structure(c(1L, NA, 1L), .Label = c("setosa", 
-"versicolor", "virginica"), class = "factor")), .Names = c("Petal.Length", 
+" NA", "0.2"), Species = structure(c(1L, NA, 1L), levels = c("setosa", 
+"versicolor", "virginica"), class = "factor")), names = c("Petal.Length", 
 "Petal.Width", "Species"), row.names = c(NA, 3L), class = "data.frame")
 )
   
   expect_equal(
     lucid(ldf, na=""),
     structure(list(Petal.Length = c("1.4", " ", "1.3"), Petal.Width = c("0.2", 
-" ", "0.2"), Species = structure(c(1L, NA, 1L), .Label = c("setosa", 
-"versicolor", "virginica"), class = "factor")), .Names = c("Petal.Length", 
+" ", "0.2"), Species = structure(c(1L, NA, 1L), levels = c("setosa", 
+"versicolor", "virginica"), class = "factor")), names = c("Petal.Length", 
 "Petal.Width", "Species"), row.names = c(NA, 3L), class = "data.frame")
 )
 
@@ -66,16 +66,16 @@ test_that("data.frame", {
     lucid(ldf, na="--"),
     structure(list(Petal.Length = c("1.4", " --", "1.3"), 
                    Petal.Width = c("0.2", 
-" --", "0.2"), Species = structure(c(1L, NA, 1L), .Label = c("setosa", 
-"versicolor", "virginica"), class = "factor")), .Names = c("Petal.Length", 
+" --", "0.2"), Species = structure(c(1L, NA, 1L), levels = c("setosa", 
+"versicolor", "virginica"), class = "factor")), names = c("Petal.Length", 
 "Petal.Width", "Species"), row.names = c(NA, 3L), class = "data.frame")
 )
   
 expect_equal(
   lucid(ldf, dig=2, na="--"),
   structure(list(Petal.Length = c("1.4", " --", "1.3"), Petal.Width = c("0.2", 
-" --", "0.2"), Species = structure(c(1L, NA, 1L), .Label = c("setosa", 
-"versicolor", "virginica"), class = "factor")), .Names = c("Petal.Length", 
+" --", "0.2"), Species = structure(c(1L, NA, 1L), levels = c("setosa", 
+"versicolor", "virginica"), class = "factor")), names = c("Petal.Length", 
 "Petal.Width", "Species"), row.names = c(NA, 3L), class = "data.frame")
 )
 
@@ -88,28 +88,28 @@ test_that("matrix", {
   expect_equal(
     lucid(lmat),
     structure(c("  NA", "21  ", "22.8", " 6", "NA", " 4", "160", 
-"160", " NA"), .Dim = c(3L, 3L), .Dimnames = list(c("Mazda RX4", 
+"160", " NA"), dim = c(3L, 3L), dimnames = list(c("Mazda RX4", 
 "Mazda RX4 Wag", "Datsun 710"), c("mpg", "cyl", "disp")))
 )
 
   expect_equal(
     lucid(lmat, na=""),
     structure(c("  ", "21  ", "22.8", " 6", "", " 4", "160", "160", 
-" "), .Dim = c(3L, 3L), .Dimnames = list(c("Mazda RX4", "Mazda RX4 Wag", 
+" "), dim = c(3L, 3L), dimnames = list(c("Mazda RX4", "Mazda RX4 Wag", 
 "Datsun 710"), c("mpg", "cyl", "disp")))
 )
 
   expect_equal(
     lucid(lmat, na=" -"),
     structure(c("   -", "21  ", "22.8", " 6", " -", " 4", "160", 
-"160", "  -"), .Dim = c(3L, 3L), .Dimnames = list(c("Mazda RX4", 
+"160", "  -"), dim = c(3L, 3L), dimnames = list(c("Mazda RX4", 
 "Mazda RX4 Wag", "Datsun 710"), c("mpg", "cyl", "disp")))
 )
   
   expect_equal(
     lucid(lmat, dig=2, na="-"),
     structure(c("-", "21", "23", " 6", "-", " 4", "160", "160", " -"
-), .Dim = c(3L, 3L), .Dimnames = list(c("Mazda RX4", "Mazda RX4 Wag", 
+), dim = c(3L, 3L), dimnames = list(c("Mazda RX4", "Mazda RX4 Wag", 
 "Datsun 710"), c("mpg", "cyl", "disp")))
 )
   
@@ -117,7 +117,7 @@ test_that("matrix", {
   expect_equal(
     noquote(lucid(lmat, dig=2, na="-")),
     structure(c("-", "21", "23", " 6", "-", " 4", "160", "160", " -"
-), .Dim = c(3L, 3L), .Dimnames = list(c("Mazda RX4", "Mazda RX4 Wag", 
+), dim = c(3L, 3L), dimnames = list(c("Mazda RX4", "Mazda RX4 Wag", 
 "Datsun 710"), c("mpg", "cyl", "disp")), class = "noquote")
 )
   
@@ -134,13 +134,13 @@ structure(list(lvec = c("0.0896", "0.211 ", "0.733 ", "0.852 ",
 "0.788 ", "0.332 ", "0.0824", "0.286 ", "0.238 ", "0.385 "), 
     ldf = structure(list(Petal.Length = c("1.4", "1.4", "1.3"
     ), Petal.Width = c("0.2", "0.2", "0.2"), Species = structure(c(1L, 
-    1L, 1L), .Label = c("setosa", "versicolor", "virginica"), 
-    class = "factor")), .Names = c("Petal.Length", 
+    1L, 1L), levels = c("setosa", "versicolor", "virginica"), 
+    class = "factor")), names = c("Petal.Length", 
     "Petal.Width", "Species"), row.names = c(NA, 3L), class = "data.frame"), 
     lmat = structure(c("21  ", "21  ", "22.8", "6", "6", "4", 
-    "160", "160", "108"), .Dim = c(3L, 3L), .Dimnames = list(
+    "160", "160", "108"), dim = c(3L, 3L), dimnames = list(
         c("Mazda RX4", "Mazda RX4 Wag", "Datsun 710"), c("mpg", 
-        "cyl", "disp")))), .Names = c("lvec", "ldf", "lmat"))
+        "cyl", "disp")))), names = c("lvec", "ldf", "lmat"))
 
 )
   
@@ -157,7 +157,7 @@ test_that("tibble", {
                          P0 = c(" a","b","c "),
                          P1 = c(-1, 0, 1), 
                          P2 = c(3.3175e-140, 1.0637e-165, 1.1279e-157)),
-                    .Names = c("id","P1", "P2","P3"), 
+                    names = c("id","P1", "P2","P3"), 
                     row.names = c(NA, -3L), 
                     class = c("tbl_df", "tbl", "data.frame"))
   

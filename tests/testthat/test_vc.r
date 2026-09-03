@@ -17,11 +17,11 @@ test_that("nlme", {
     vc(m1n),
       structure(list(effect = 
                        structure(1:2, 
-                                 .Label = c("(Intercept)", "Residual"), 
+                                 levels = c("(Intercept)", "Residual"), 
                                  class = "factor"), 
                      variance = c(615.31, 16.17), 
                      stddev = c(24.81, 4.02)), 
-                .Names = c("effect", "variance", "stddev"), 
+                names = c("effect", "variance", "stddev"), 
                 row.names = c(NA, -2L), class = c("vc.lme", "data.frame")),
     tolerance=1e-1)
 
@@ -77,7 +77,7 @@ test_that("asreml", {
     m1a <- asreml(travel~1, random=~Rail, data=Rail)
     expect_equal(
       vc(m1a),
-      structure(list(effect = structure(1:2, .Label = c("Rail", "units!R"), 
+      structure(list(effect = structure(1:2, levels = c("Rail", "units!R"), 
         class = "factor"), 
         component = c(615.74, 16.18), 
         std.error = c(391.58, 6.61), 
